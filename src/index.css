@@ -1,0 +1,189 @@
+/* Reset e estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+/* Melhorias de acessibilidade */
+:focus {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
+}
+
+/* Skip to main content - acessibilidade */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #000;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Responsividade */
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    padding: 10px;
+  }
+}
+
+/* Suporte a alto contraste */
+@media (forced-colors: active) {
+  :root {
+    --primary-color: CanvasText;
+    --background-color: Canvas;
+    --border-color: CanvasText;
+  }
+
+  * {
+    forced-color-adjust: none;
+  }
+
+  /* Garantir visibilidade dos ícones */
+  svg {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+  }
+
+  /* Melhorar contraste dos botões */
+  button {
+    border: 2px solid currentColor !important;
+  }
+
+  /* Melhorar contraste dos inputs */
+  input, textarea {
+    border: 2px solid currentColor !important;
+    background-color: Canvas !important;
+    color: CanvasText !important;
+  }
+}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Estilos para texto selecionado */
+::selection {
+  background-color: #4A90E2;
+  color: white;
+}
+
+/* Estilos para código */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Melhorias de legibilidade */
+@media screen and (min-width: 601px) {
+  body {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+/* Suporte a impressão */
+@media print {
+  body {
+    padding: 0;
+    color: #000;
+    background: #fff;
+  }
+
+  @page {
+    margin: 2cm;
+  }
+}
+
+/* Melhorias de contraste para ícones */
+.MuiSvgIcon-root {
+  fill: currentColor !important;
+}
+
+/* Melhorias de contraste para inputs */
+.PhoneInput {
+  --PhoneInputCountryFlag-height: 20px;
+  --PhoneInputCountrySelectArrow-color: currentColor;
+  --PhoneInputCountrySelect-marginRight: 0.5em;
+  font-size: 16px !important;
+}
+
+.PhoneInputInput {
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  color: inherit;
+}
+
+.PhoneInputCountryIcon {
+  opacity: 1 !important;
+}
+
+/* Melhorias de contraste para botões */
+.MuiButton-root {
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+/* Melhorias de contraste para texto */
+.MuiTypography-root {
+  color: inherit;
+}
+
+/* Prevenir zoom no input de telefone no mobile */
+.PhoneInput input {
+  font-size: 16px !important;
+}
+
+@media (max-width: 600px) {
+  .PhoneInput input {
+    font-size: 16px !important;
+  }
+}
