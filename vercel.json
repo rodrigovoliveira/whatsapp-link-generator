@@ -21,6 +21,17 @@
       ],
       "destination": "https://gerarlinkzap.com.br/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "gerarlinkzap.com.br"
+        }
+      ],
+      "destination": "https://www.gerarlinkzap.com.br/:path*",
+      "permanent": true
     }
   ]
 } 
