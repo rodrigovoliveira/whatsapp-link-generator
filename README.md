@@ -146,20 +146,150 @@ npm start
 
 ## 🚀 Deploy
 
+### Ambientes
+
+#### Produção
+- URL: [https://www.geraqrzap.com.br/gerar-link-whatsapp](https://www.geraqrzap.com.br/gerar-link-whatsapp)
+- Branch: `main`
+- Plataforma: Vercel
+- Domínio: GoDaddy
+
+### Configuração da Vercel
+
+1. Conecte seu repositório GitHub à Vercel
+2. Configure as variáveis de ambiente necessárias
+3. A Vercel detectará automaticamente que é um projeto React e configurará o build
+4. O deploy é automático a cada push na branch `main`
+
+### Atualizando a Versão em Produção
+
+#### Método 1: Deploy Automático (via main)
+1. A branch `main` está configurada para deploy automático
+2. Qualquer push para `main` iniciará um novo deploy
+3. A Vercel mantém um histórico de deploys, permitindo rollback se necessário
+
+#### Método 2: Processo Completo (Recomendado)
+1. Crie uma branch de feature:
 ```bash
+git checkout -b feature/sua-feature
+```
+
+2. Faça suas alterações e teste localmente:
+```bash
+npm install
+npm start # teste em desenvolvimento
+npm run build # teste a build
+```
+
+3. Commit e push das alterações:
+```bash
+git add .
+git commit -m "descrição das alterações"
+git push origin feature/sua-feature
+```
+
+4. Crie um Pull Request no GitHub:
+   - Base: `main` <- Compare: `feature/sua-feature`
+   - A Vercel criará automaticamente um deploy preview
+   - Verifique o preview antes de fazer o merge
+
+5. Após aprovação e merge:
+   - A Vercel detectará o merge na `main`
+   - Iniciará automaticamente um novo deploy em produção
+   - Você pode acompanhar o progresso no dashboard da Vercel
+
+#### Verificando o Deploy
+1. Monitore o status do deploy no dashboard da Vercel
+2. Verifique a aplicação em produção após o deploy
+3. Em caso de problemas, você pode:
+   - Verificar os logs na Vercel
+   - Fazer rollback para a versão anterior
+   - Verificar se há erros no console do navegador
+
+### Configuração do Domínio (GoDaddy)
+
+1. No GoDaddy, configure os nameservers para apontar para a Vercel:
+```
+ns1.vercel-dns.com
+ns2.vercel-dns.com
+```
+
+2. Na Vercel:
+- Adicione o domínio nas configurações do projeto
+- Aguarde a propagação DNS (pode levar até 48 horas)
+- Verifique se o SSL/HTTPS está ativo
+
+### Desenvolvimento Local
+
+#### Requisitos
+- Node.js versão LTS (recomendado v18.x)
+  - Versões muito recentes do Node.js (como v22+) podem apresentar incompatibilidades com o `react-scripts`
+  - Se necessário, use um gerenciador de versões como `nvm` para instalar a versão correta
+
+#### Instalação do nvm (opcional, mas recomendado)
+```bash
+# macOS (usando Homebrew)
+brew install nvm
+
+# Criar diretório .nvm
+mkdir ~/.nvm
+
+# Adicione ao seu ~/.zshrc ou ~/.bash_profile:
+export NVM_DIR="$HOME/.nvm"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+
+# Instale e use o Node.js v18
+nvm install 18
+nvm use 18
+```
+
+#### Gerando a Build de Produção
+
+```bash
+# Instale as dependências
+npm install
+
 # Gere a build de produção
 npm run build
+```
 
-# Instale o serve localmente (se ainda não estiver instalado)
-npm install serve --save-dev
+#### Servindo a Aplicação
 
-# Sirva localmente (porta 3000)
+Existem duas maneiras de servir a aplicação em produção:
+
+1. Usando o script npm configurado:
+```bash
+npm run serve
+```
+
+2. Usando o serve diretamente:
+```bash
+# Instale o serve globalmente (opcional)
+npm install -g serve
+
+# OU use npx (não requer instalação)
 npx serve -s build -l 3000 --no-clipboard
 ```
 
-Após executar estes comandos, o servidor estará rodando em:
+Após executar um dos comandos acima, o servidor estará rodando em:
 - Local: http://localhost:3000
 - Network: http://[seu-ip]:3000
+
+#### Troubleshooting
+
+1. Se encontrar erros com o `react-scripts` durante o build:
+   - Verifique sua versão do Node.js (`node -v`)
+   - Se estiver usando uma versão muito recente, mude para a v18 LTS
+   - Limpe a instalação e reinstale as dependências:
+     ```bash
+     rm -rf node_modules package-lock.json
+     npm install
+     ```
+
+2. Se o servidor não mostrar a aplicação corretamente:
+   - Certifique-se de que você gerou a build primeiro (`npm run build`)
+   - Verifique se está servindo o diretório `build` e não a raiz do projeto
+   - Confirme que não há outro serviço rodando na porta 3000
 
 ## 📝 Licença
 
