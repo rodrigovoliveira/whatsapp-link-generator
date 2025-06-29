@@ -1,3 +1,42 @@
-# https://www.robotstxt.org/robotstxt.html
+# robots.txt para gerarlinkzap.com.br
+# Configuração otimizada para SEO seguindo diretrizes do Google
+
 User-agent: *
-Disallow:
+Allow: /
+
+# Permitir recursos essenciais
+Allow: *.js
+Allow: *.css
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.png
+Allow: *.svg
+Allow: *.ico
+
+# Bloquear URLs duplicadas ou não necessárias para indexação
+Disallow: /*?
+Disallow: /*&
+Disallow: /search
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Crawl-delay para bots genéricos (em segundos)
+Crawl-delay: 1
+
+# Configurações específicas para bots principais
+User-agent: Googlebot
+Crawl-delay: 0
+
+User-agent: Bingbot
+Crawl-delay: 0
+
+User-agent: Yandex
+Crawl-delay: 0
+
+# Sitemaps
+Sitemap: https://www.gerarlinkzap.com.br/sitemap.xml
+
+# Host preferido (canonical)
+Host: https://www.gerarlinkzap.com.br

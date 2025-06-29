@@ -19,6 +19,7 @@ import MessageTemplates from './MessageTemplates';
 import InfoSections from './InfoSections';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { validatePhone, validateMessage, sanitizeInput } from '../utils/validation';
+import { analytics } from '../services/analyticsService';
 
 // Lazy load do Emoji Picker
 const Picker = lazy(() => import('@emoji-mart/react'));
@@ -140,6 +141,11 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
     loadUserCountry();
   }, []);
 
+  // Rastrear visualização da página
+  useEffect(() => {
+    analytics.trackPageView('link_generator');
+  }, []);
+
   const handleFormat = (type: FormatType) => {
     const button = formatButtons.find(btn => btn.type === type);
     if (!button) return;
@@ -155,6 +161,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                    message.substring(end);
     
     onMessageChange(newText);
+    analytics.trackMessageFormatting(type); // Rastrear formatação
     
     // Restore cursor position after React updates the textarea
     setTimeout(() => {
@@ -193,9 +200,11 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         await navigator.clipboard.writeText(generatedLink);
         setCopySuccess(true);
         setOpenSnackbar(true);
+        analytics.trackLinkCopy(); // Rastrear cópia do link
         setTimeout(() => setCopySuccess(false), 2000);
-      } catch (err) {
+      } catch (err: any) {
         console.error('Erro ao copiar:', err);
+        analytics.trackError('copy_error', err?.message || 'Erro desconhecido');
       }
     }
   };
@@ -203,12 +212,14 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
   const handleTestWhatsApp = () => {
     if (generatedLink) {
       window.open(generatedLink, '_blank');
+      analytics.trackLinkClick(); // Rastrear clique no link
     }
   };
 
   const handleGenerateQRCode = () => {
     if (generatedLink) {
       onLinkGenerated(generatedLink);
+      analytics.trackQRCodeGeneration(); // Rastrear geração de QR Code
       navigate('/gerar-qr-code');
     }
   };
@@ -224,12 +235,17 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
     const validation = validatePhone(value || '');
     setPhoneError(validation.error);
     onPhoneChange(value || '');
+    
+    if (value && !validation.error) {
+      analytics.trackLinkGeneration(value); // Rastrear geração de link com número válido
+    }
   };
 
   const handleTemplateSelected = (templateMessage: string) => {
     onMessageChange(templateMessage);
     setSnackbarMessage('Template selecionado! ✨');
     setOpenSnackbar(true);
+    analytics.trackTemplateSelection(templateMessage.substring(0, 30)); // Rastrear seleção de template
     
     // Scroll e foco para o campo de mensagem
     setTimeout(() => {
@@ -282,24 +298,39 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         GERAR QR CODE
       </Typography>
 
-      <Typography 
-        variant="h1" 
-        component="h1" 
-        gutterBottom 
-        align="center" 
-        sx={{ 
-          mb: 4, 
-          color: 'text.primary',
-          fontSize: { xs: '1.5rem', sm: '2.5rem' },
-          mt: { xs: 1, sm: 0 }
-        }}
-      >
-        Gerador de Link do WhatsApp
+      {/* Título e Subtítulo */}
+      <Box sx={{ textAlign: 'center', mb: 2 }}>
+        <Typography 
+          variant="h1" 
+          component="h1" 
+          gutterBottom 
+          align="center" 
+          sx={{ 
+            mb: 4, 
+            color: 'text.primary',
+            fontSize: { xs: '1.5rem', sm: '2.5rem' },
+            mt: { xs: 1, sm: 0 }
+          }}
+        >
+          Crie seu Link para WhatsApp Grátis
+        </Typography>
+        
+        <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary', textAlign: 'center' }}>
+          Gere links personalizados para WhatsApp com mensagem pré-definida. Sem login e sem custo – basta inserir o número e a mensagem.
+        </Typography>
+      </Box>
+
+      <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
+        Instruções rápidas:
       </Typography>
-      
-      <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary', textAlign: 'center' }}>
-        Crie links personalizados para iniciar conversas no WhatsApp sem precisar adicionar o contato.
-      </Typography>
+
+      <Stack spacing={2} sx={{ mb: 4 }}>
+        <Typography variant="body1">1. Digite o número com DDD e DDI (ex: +55 11 99999-0000)</Typography>
+        <Typography variant="body1">2. Escreva a mensagem automática</Typography>
+        <Typography variant="body1">3. Clique em "Gerar link gratuitamente"</Typography>
+        <Typography variant="body1">4. Copie o link ou leia o QR Code</Typography>
+        <Typography variant="body1">5. Use onde quiser</Typography>
+      </Stack>
 
       <Box sx={{ 
         display: 'flex', 

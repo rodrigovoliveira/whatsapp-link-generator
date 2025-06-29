@@ -11,6 +11,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from 'react-router-dom';
 import ImageCropModal from './ImageCropModal';
 import { validateImageFile } from '../utils/validation';
+import { analytics } from '../services/analyticsService';
 
 interface QRCodeGeneratorProps {
   whatsappLink: string;
@@ -85,6 +86,11 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
     }
   }, [logoImage, whatsappLink]);
 
+  // Rastrear visualização da página
+  useEffect(() => {
+    analytics.trackPageView('qr_code_generator');
+  }, []);
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -93,16 +99,19 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
     if (!validation.isValid) {
       setError(validation.error || 'Erro ao validar imagem');
       setShowError(true);
+      analytics.trackError('image_validation', validation.error || 'Erro ao validar imagem');
       return;
     }
 
     setSelectedFile(file);
     setShowCropModal(true);
+    analytics.trackQRCodeCustomization('logo');
   };
 
   const handleCropComplete = (croppedImage: string) => {
     setLogoImage(croppedImage);
     setShowCropModal(false);
+    analytics.trackQRCodeCustomization('style');
   };
 
   const handleDownload = () => {
@@ -170,10 +179,12 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
         }
       };
       img.src = svgUrl;
-    } catch (error) {
+      analytics.trackQRCodeDownload();
+    } catch (error: any) {
       console.error('Erro ao gerar QR Code:', error);
       setError('Erro ao gerar o QR Code. Tente novamente.');
       setShowError(true);
+      analytics.trackError('qr_generation', error?.message || 'Erro ao gerar QR Code');
     }
   };
 
@@ -200,6 +211,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
 
   const handleBack = () => {
     navigate('/gerar-link-whatsapp');
+    analytics.trackPageView('return_to_link_generator');
   };
 
   const handleEditLogo = () => {
@@ -218,25 +230,23 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
         <Stack spacing={3}>
           {/* Título e Subtítulo */}
           <Box sx={{ textAlign: 'center', mb: 2 }}>
-            <Typography variant="h6" component="h6" sx={{ 
-              fontSize: { xs: '1rem', md: '1.2rem' },
-              fontWeight: 'bold',
-              mb: 2,
-              color: '#128C7E'
-            }}>
-              GERAR QR CODE
+            <Typography 
+              variant="h1" 
+              component="h1" 
+              gutterBottom 
+              align="center" 
+              sx={{ 
+                mb: 4, 
+                color: 'text.primary',
+                fontSize: { xs: '1.5rem', sm: '2.5rem' },
+                mt: { xs: 1, sm: 0 }
+              }}
+            >
+              Crie seu QR Code para WhatsApp Grátis
             </Typography>
-            <Typography variant="h1" component="h1" sx={{ 
-              fontSize: { xs: '2rem', md: '2.5rem' },
-              fontWeight: 'bold',
-              mb: 2,
-              color: '#128C7E'
-            }}>
-              Crie um QR Code do seu link do WhatsApp — Grátis e sem login
-            </Typography>
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary' }}>
-              Gere gratuitamente um QR Code para o link do WhatsApp com sua mensagem pronta. 
-              Ideal para imprimir em materiais de divulgação, usar em embalagens, vitrines ou enviar digitalmente.
+            
+            <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary', textAlign: 'center' }}>
+              Gere o QR Code do seu link com mensagem personalizada. Sem login e sem custo – basta colar o link e baixar o QR em segundos.
             </Typography>
           </Box>
 
@@ -388,32 +398,37 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
 
           {/* Instruções de Uso */}
           <Box sx={{ mt: 4 }}>
-            <Typography variant="h2" sx={{ fontSize: '1.5rem', fontWeight: 'bold', mb: 2 }}>
-              Como usar este QR Code?
+            <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
+              Instruções rápidas:
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              Basta imprimir ou compartilhar este código para que qualquer pessoa possa escanear com a câmera do celular 
-              e iniciar a conversa com a mensagem automática no seu WhatsApp.
+
+            <Stack spacing={2} sx={{ mb: 4 }}>
+              <Typography variant="body1">1. Cole o link do WhatsApp com mensagem</Typography>
+              <Typography variant="body1">2. Clique em "Gerar QR Code"</Typography>
+              <Typography variant="body1">3. Visualize o código</Typography>
+              <Typography variant="body1">4. Clique em "Baixar PNG"</Typography>
+            </Stack>
+
+            <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
+              Por que usar QR Code para WhatsApp?
             </Typography>
-            <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
-              Ideal para usar em:
+
+            <Stack spacing={2} sx={{ mb: 4 }}>
+              <Typography variant="body1">• Ideal para impressão e digital</Typography>
+              <Typography variant="body1">• Permite acesso imediato com celular</Typography>
+              <Typography variant="body1">• Totalmente grátis e ilimitado</Typography>
+            </Stack>
+
+            <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
+              Exemplos de uso:
             </Typography>
-            <List>
-              {[
-                'Cartões de visita',
-                'Etiquetas e embalagens',
-                'Cartazes e vitrines',
-                'Materiais promocionais',
-                'Campanhas digitais'
-              ].map((item, index) => (
-                <ListItem key={index} sx={{ py: 0.5 }}>
-                  <ListItemIcon sx={{ minWidth: 36 }}>
-                    <CheckCircleIcon sx={{ color: '#25D366' }} />
-                  </ListItemIcon>
-                  <ListItemText primary={item} />
-                </ListItem>
-              ))}
-            </List>
+
+            <Stack spacing={2} sx={{ mb: 4 }}>
+              <Typography variant="body1">• Cartões de visita</Typography>
+              <Typography variant="body1">• Embalagens de produto</Typography>
+              <Typography variant="body1">• Vitrines e pontos de venda</Typography>
+              <Typography variant="body1">• Stories e posts patrocinados</Typography>
+            </Stack>
           </Box>
 
           {/* FAQs */}
