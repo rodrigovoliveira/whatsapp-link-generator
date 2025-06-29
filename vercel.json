@@ -9,8 +9,7 @@
         }
       ],
       "destination": "https://gerarlinkzap.com.br/:path*",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     },
     {
       "source": "/:path*",
@@ -21,8 +20,7 @@
         }
       ],
       "destination": "https://gerarlinkzap.com.br/:path*",
-      "permanent": true,
-      "statusCode": 301
+      "permanent": true
     }
   ]
 } 
