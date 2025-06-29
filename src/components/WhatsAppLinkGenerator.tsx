@@ -263,6 +263,26 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
       pt: { xs: '70px', sm: 3 }
     }}>
       <Typography 
+        variant="h6" 
+        component="h6" 
+        gutterBottom 
+        align="center"
+        sx={{ color: 'text.secondary' }}
+      >
+        GERAR LINK WHATSAPP
+      </Typography>
+
+      <Typography 
+        variant="h6" 
+        component="h6" 
+        gutterBottom 
+        align="center"
+        sx={{ color: 'text.secondary' }}
+      >
+        GERAR QR CODE
+      </Typography>
+
+      <Typography 
         variant="h1" 
         component="h1" 
         gutterBottom 
@@ -288,125 +308,83 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         mb: 4
       }}>
         {/* Coluna principal - Formulário */}
-        <Box sx={{ flex: '1 1 100%' }}>
-          <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
-            <Stack spacing={3}>
-              <Box>
-                <Typography variant="subtitle1" gutterBottom>
-                  Número do WhatsApp
+        <Box sx={{ flex: 1 }}>
+          <Paper elevation={3} sx={{ p: 3 }}>
+            <Box>
+              <Typography variant="h6" component="h6" sx={{ color: 'text.primary', mb: 2 }}>
+                Número do WhatsApp
+              </Typography>
+              <PhoneInput
+                international
+                defaultCountry={defaultCountry}
+                value={phone}
+                onChange={handlePhoneChange}
+                disabled={isLoadingCountry}
+                error={phoneError}
+                aria-label="Número do WhatsApp"
+                sx={{
+                  '& .PhoneInputInput': {
+                    width: '100%',
+                    p: 1.5,
+                    borderRadius: 1,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    bgcolor: 'background.paper',
+                    color: 'text.primary',
+                  }
+                }}
+              />
+              {phoneError && (
+                <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
+                  {phoneError}
                 </Typography>
-                <PhoneInput
-                  international
-                  defaultCountry={defaultCountry}
-                  value={phone}
-                  onChange={handlePhoneChange}
-                  disabled={isLoadingCountry}
-                  error={phoneError}
-                  aria-label="Número do WhatsApp"
+              )}
+            </Box>
+
+            <Box>
+              <Box sx={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center',
+                mb: 1
+              }}>
+                <Typography variant="h6" component="h6" sx={{ color: 'text.primary' }}>
+                  Mensagem (opcional)
+                </Typography>
+                <Button
+                  variant="text"
+                  color="secondary"
+                  size="small"
+                  onClick={scrollToTemplates}
                   sx={{
-                    '& .PhoneInputInput': {
-                      width: '100%',
-                      p: 1.5,
-                      borderRadius: 1,
-                      border: '1px solid',
-                      borderColor: 'divider',
-                      bgcolor: 'background.paper',
-                      color: 'text.primary',
+                    textTransform: 'none',
+                    fontSize: { xs: '0.8rem', sm: '0.875rem' },
+                    '&:hover': {
+                      backgroundColor: 'action.hover'
                     }
                   }}
-                />
-                {phoneError && (
-                  <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                    {phoneError}
-                  </Typography>
-                )}
+                >
+                  Ver mensagens prontas ↓
+                </Button>
               </Box>
 
-              <Box>
-                <Box sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  mb: 1
-                }}>
-                  <Typography variant="h6" sx={{ color: 'text.primary' }}>
-                    Mensagem (opcional)
-                  </Typography>
-                  <Button
-                    variant="text"
-                    color="secondary"
-                    size="small"
-                    onClick={scrollToTemplates}
-                    sx={{
-                      textTransform: 'none',
-                      fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                      '&:hover': {
-                        backgroundColor: 'action.hover'
-                      }
-                    }}
-                  >
-                    Ver mensagens prontas ↓
-                  </Button>
-                </Box>
-
-                {/* Barra de formatação móvel */}
-                <Paper 
-                  elevation={1} 
-                  sx={{ 
-                    p: 1, 
-                    mb: 2,
-                    display: { xs: 'block', sm: 'none' },
-                    bgcolor: 'background.default'
-                  }}
-                >
-                  <Stack 
-                    direction="row" 
-                    spacing={1} 
-                    sx={{ 
-                      flexWrap: 'wrap',
-                      gap: 1,
-                      justifyContent: 'center'
-                    }}
-                  >
-                    {formatButtons.map((btn) => (
-                      <Tooltip key={btn.type} title={btn.tooltip}>
-                        <IconButton
-                          onClick={() => handleFormat(btn.type)}
-                          size="small"
-                          aria-label={btn.tooltip}
-                          sx={{
-                            bgcolor: 'background.paper',
-                            '&:hover': { bgcolor: 'action.hover' }
-                          }}
-                        >
-                          {btn.icon}
-                        </IconButton>
-                      </Tooltip>
-                    ))}
-                    
-                    <Tooltip title="Adicionar emoji">
-                      <IconButton
-                        onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
-                        size="small"
-                        aria-label="Adicionar emoji"
-                        sx={{ 
-                          bgcolor: 'background.paper',
-                          '&:hover': { bgcolor: 'action.hover' }
-                        }}
-                      >
-                        <EmojiEmotionsIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </Stack>
-                </Paper>
-
-                {/* Barra de formatação desktop */}
+              {/* Barra de formatação móvel */}
+              <Paper 
+                elevation={1} 
+                sx={{ 
+                  p: 1, 
+                  mb: 2,
+                  display: { xs: 'block', sm: 'none' },
+                  bgcolor: 'background.default'
+                }}
+              >
                 <Stack 
                   direction="row" 
                   spacing={1} 
                   sx={{ 
-                    mb: 2,
-                    display: { xs: 'none', sm: 'flex' }
+                    flexWrap: 'wrap',
+                    gap: 1,
+                    justifyContent: 'center'
                   }}
                 >
                   {formatButtons.map((btn) => (
@@ -415,6 +393,10 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                         onClick={() => handleFormat(btn.type)}
                         size="small"
                         aria-label={btn.tooltip}
+                        sx={{
+                          bgcolor: 'background.paper',
+                          '&:hover': { bgcolor: 'action.hover' }
+                        }}
                       >
                         {btn.icon}
                       </IconButton>
@@ -426,132 +408,168 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                       onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
                       size="small"
                       aria-label="Adicionar emoji"
+                      sx={{ 
+                        bgcolor: 'background.paper',
+                        '&:hover': { bgcolor: 'action.hover' }
+                      }}
                     >
                       <EmojiEmotionsIcon />
                     </IconButton>
                   </Tooltip>
                 </Stack>
+              </Paper>
 
-                <TextField
-                  multiline
-                  rows={4}
-                  fullWidth
-                  value={message}
-                  onChange={(e) => handleMessageChange(e.target.value)}
-                  placeholder="Digite sua mensagem aqui..."
-                  error={!!messageError}
-                  helperText={messageError}
-                  aria-label="Mensagem"
-                  sx={{
-                    '& .MuiInputBase-input': {
-                      color: 'text.primary',
-                    }
-                  }}
-                  inputRef={messageInputRef}
-                />
-              </Box>
-
-              <Box ref={messageTemplatesRef}>
-                <Paper elevation={0} sx={{ p: 0, bgcolor: 'background.default' }}>
-                  <MessageTemplates onSelectTemplate={handleTemplateSelected} />
-                </Paper>
-              </Box>
-
-              {/* Link gerado */}
-              {generatedLink && (
-                <Paper 
-                  elevation={1} 
-                  sx={{ 
-                    p: 2, 
-                    bgcolor: 'success.light',
-                    color: 'success.contrastText',
-                    borderRadius: 1
-                  }}
-                >
-                  <Typography variant="subtitle2" gutterBottom>
-                    Link gerado com sucesso:
-                  </Typography>
-                  <Typography 
-                    variant="body2" 
-                    sx={{ 
-                      wordBreak: 'break-all',
-                      fontFamily: 'monospace',
-                      mb: 2
-                    }}
-                  >
-                    {generatedLink}
-                  </Typography>
-                </Paper>
-              )}
-
-              {/* Botões de ação responsivos */}
+              {/* Barra de formatação desktop */}
               <Stack 
-                spacing={2} 
+                direction="row" 
+                spacing={1} 
                 sx={{ 
-                  flexDirection: { xs: 'column', sm: 'row' },
-                  justifyContent: 'center'
+                  mb: 2,
+                  display: { xs: 'none', sm: 'flex' }
                 }}
               >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleTestWhatsApp}
-                  disabled={!generatedLink}
-                  startIcon={<WhatsAppIcon />}
-                  aria-label="Testar no WhatsApp"
-                  fullWidth
-                  sx={{ 
-                    minWidth: { sm: 200 },
-                    py: { xs: 1.5, sm: 1 }
-                  }}
-                >
-                  Testar no WhatsApp
-                </Button>
-
-                <Button
-                  variant="outlined"
-                  onClick={handleCopyLink}
-                  disabled={!generatedLink}
-                  startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
-                  aria-label="Copiar link"
-                  fullWidth
-                  sx={{ 
-                    minWidth: { sm: 160 },
-                    py: { xs: 1.5, sm: 1 }
-                  }}
-                >
-                  {copySuccess ? 'Copiado!' : 'Copiar link'}
-                </Button>
-
-                <Button
-                  variant="outlined"
-                  onClick={handleGenerateQRCode}
-                  disabled={!generatedLink}
-                  startIcon={<QrCodeIcon />}
-                  aria-label="Gerar QR Code"
-                  fullWidth
-                  sx={{ 
-                    minWidth: { sm: 160 },
-                    py: { xs: 1.5, sm: 1 }
-                  }}
-                >
-                  QR Code
-                </Button>
+                {formatButtons.map((btn) => (
+                  <Tooltip key={btn.type} title={btn.tooltip}>
+                    <IconButton
+                      onClick={() => handleFormat(btn.type)}
+                      size="small"
+                      aria-label={btn.tooltip}
+                    >
+                      {btn.icon}
+                    </IconButton>
+                  </Tooltip>
+                ))}
+                
+                <Tooltip title="Adicionar emoji">
+                  <IconButton
+                    onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
+                    size="small"
+                    aria-label="Adicionar emoji"
+                  >
+                    <EmojiEmotionsIcon />
+                  </IconButton>
+                </Tooltip>
               </Stack>
 
-              <Button
-                variant="text"
-                onClick={onReset}
-                startIcon={<RestartAltIcon />}
-                aria-label="Limpar campos"
+              <TextField
+                multiline
+                rows={4}
+                fullWidth
+                value={message}
+                onChange={(e) => handleMessageChange(e.target.value)}
+                placeholder="Digite sua mensagem aqui..."
+                error={!!messageError}
+                helperText={messageError}
+                aria-label="Mensagem"
+                sx={{
+                  '& .MuiInputBase-input': {
+                    color: 'text.primary',
+                  }
+                }}
+                inputRef={messageInputRef}
+              />
+            </Box>
+
+            <Box ref={messageTemplatesRef}>
+              <Paper elevation={0} sx={{ p: 0, bgcolor: 'background.default' }}>
+                <MessageTemplates onSelectTemplate={handleTemplateSelected} />
+              </Paper>
+            </Box>
+
+            {/* Link gerado */}
+            {generatedLink && (
+              <Paper 
+                elevation={1} 
                 sx={{ 
-                  alignSelf: 'center',
+                  p: 2, 
+                  bgcolor: 'success.light',
+                  color: 'success.contrastText',
+                  borderRadius: 1
+                }}
+              >
+                <Typography variant="subtitle2" gutterBottom>
+                  Link gerado com sucesso:
+                </Typography>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    wordBreak: 'break-all',
+                    fontFamily: 'monospace',
+                    mb: 2
+                  }}
+                >
+                  {generatedLink}
+                </Typography>
+              </Paper>
+            )}
+
+            {/* Botões de ação responsivos */}
+            <Stack 
+              spacing={2} 
+              sx={{ 
+                flexDirection: { xs: 'column', sm: 'row' },
+                justifyContent: 'center'
+              }}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleTestWhatsApp}
+                disabled={!generatedLink}
+                startIcon={<WhatsAppIcon />}
+                aria-label="Testar no WhatsApp"
+                fullWidth
+                sx={{ 
+                  minWidth: { sm: 200 },
                   py: { xs: 1.5, sm: 1 }
                 }}
               >
-                Limpar campos
+                Testar no WhatsApp
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={handleCopyLink}
+                disabled={!generatedLink}
+                startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
+                aria-label="Copiar link"
+                fullWidth
+                sx={{ 
+                  minWidth: { sm: 160 },
+                  py: { xs: 1.5, sm: 1 }
+                }}
+              >
+                {copySuccess ? 'Copiado!' : 'Copiar link'}
+              </Button>
+
+              <Button
+                variant="outlined"
+                onClick={handleGenerateQRCode}
+                disabled={!generatedLink}
+                startIcon={<QrCodeIcon />}
+                aria-label="Gerar QR Code"
+                fullWidth
+                sx={{ 
+                  minWidth: { sm: 160 },
+                  py: { xs: 1.5, sm: 1 }
+                }}
+              >
+                QR Code
               </Button>
             </Stack>
+
+            <Button
+              variant="text"
+              onClick={onReset}
+              startIcon={<RestartAltIcon />}
+              aria-label="Limpar campos"
+              sx={{ 
+                alignSelf: 'center',
+                py: { xs: 1.5, sm: 1 }
+              }}
+            >
+              Limpar campos
+            </Button>
           </Paper>
         </Box>
       </Box>

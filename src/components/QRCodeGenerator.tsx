@@ -218,7 +218,15 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
         <Stack spacing={3}>
           {/* Título e Subtítulo */}
           <Box sx={{ textAlign: 'center', mb: 2 }}>
-            <Typography variant="h1" sx={{ 
+            <Typography variant="h6" component="h6" sx={{ 
+              fontSize: { xs: '1rem', md: '1.2rem' },
+              fontWeight: 'bold',
+              mb: 2,
+              color: '#128C7E'
+            }}>
+              GERAR QR CODE
+            </Typography>
+            <Typography variant="h1" component="h1" sx={{ 
               fontSize: { xs: '2rem', md: '2.5rem' },
               fontWeight: 'bold',
               mb: 2,

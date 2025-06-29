@@ -10,7 +10,7 @@ const InfoSections = () => {
     <Box sx={{ mt: 4 }}>
       {/* Instruções Rápidas */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" component="h6" gutterBottom>
           Como usar o gerador de link do WhatsApp grátis:
         </Typography>
         <List>
@@ -33,7 +33,7 @@ const InfoSections = () => {
 
       {/* Exemplos Prontos */}
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" component="h6" gutterBottom>
           Modelos gratuitos de link do WhatsApp:
         </Typography>
         <List>
@@ -53,7 +53,7 @@ const InfoSections = () => {
           ].map((item, index) => (
             <ListItem key={index}>
               <Box>
-                <Typography variant="subtitle1">{item.title}</Typography>
+                <Typography variant="h6" component="h6">{item.title}</Typography>
                 <Typography 
                   variant="body2" 
                   sx={{ 
@@ -74,7 +74,7 @@ const InfoSections = () => {
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <QrCodeIcon sx={{ fontSize: 40, color: '#25D366' }} />
-          <Typography variant="h6">
+          <Typography variant="h6" component="h6">
             Crie QR Code do WhatsApp grátis
           </Typography>
         </Box>
@@ -89,7 +89,7 @@ const InfoSections = () => {
       <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
           <HelpOutlineIcon sx={{ fontSize: 40, color: '#25D366' }} />
-          <Typography variant="h6">
+          <Typography variant="h6" component="h6">
             Perguntas frequentes
           </Typography>
         </Box>
@@ -151,7 +151,7 @@ const InfoSections = () => {
           backgroundColor: 'rgba(37, 211, 102, 0.04)'
         }}
       >
-        <Typography variant="h6" gutterBottom>
+        <Typography variant="h6" component="h6" gutterBottom>
           Comece agora! Gere seu link do WhatsApp 100% grátis, copie o QR Code e compartilhe com seus clientes.
         </Typography>
       </Paper>
