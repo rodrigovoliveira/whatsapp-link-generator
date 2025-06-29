@@ -7,7 +7,19 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ShareIcon from '@mui/icons-material/Share';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
+import { styled } from '@mui/material/styles';
+
+const SwipeableViews = styled(Box)({
+  display: 'flex',
+  overflow: 'hidden',
+  width: '100%',
+  position: 'relative',
+  '& > div': {
+    flexShrink: 0,
+    width: '100%',
+    transition: 'transform 0.35s ease-in-out',
+  },
+});
 
 const instructions = [
   {
@@ -108,10 +120,6 @@ const QuickInstructions: React.FC = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleStepChange = (step: number) => {
-    setActiveStep(step);
-  };
-
   return (
     <Box sx={{ my: 4, width: '100%' }}>
       <Typography 
@@ -130,22 +138,31 @@ const QuickInstructions: React.FC = () => {
       
       {isMobile ? (
         <Box sx={{ maxWidth: '100%', flexGrow: 1 }}>
-          <SwipeableViews
-            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-            index={activeStep}
-            onChangeIndex={handleStepChange}
-            enableMouseEvents
-          >
-            {instructions.map((instruction, index) => (
-              <Box key={index} sx={{ p: 1 }}>
-                <InstructionCard
-                  icon={instruction.icon}
-                  text={instruction.text}
-                  index={index}
-                  isMobile={true}
-                />
-              </Box>
-            ))}
+          <SwipeableViews>
+            <Box
+              sx={{
+                display: 'flex',
+                transform: `translateX(-${activeStep * 100}%)`,
+              }}
+            >
+              {instructions.map((instruction, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    p: 1,
+                    width: '100%',
+                    flexShrink: 0,
+                  }}
+                >
+                  <InstructionCard
+                    icon={instruction.icon}
+                    text={instruction.text}
+                    index={index}
+                    isMobile={true}
+                  />
+                </Box>
+              ))}
+            </Box>
           </SwipeableViews>
           <MobileStepper
             steps={maxSteps}
