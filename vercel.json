@@ -8,7 +8,7 @@
           "value": "geraqrzap.com.br"
         }
       ],
-      "destination": "https://gerarlinkzap.com.br/:path*",
+      "destination": "https://www.gerarlinkzap.com.br/:path*",
       "permanent": true
     },
     {
@@ -19,8 +19,30 @@
           "value": "www.geraqrzap.com.br"
         }
       ],
-      "destination": "https://gerarlinkzap.com.br/:path*",
+      "destination": "https://www.gerarlinkzap.com.br/:path*",
       "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "gerarlinkzap.com.br"
+        }
+      ],
+      "destination": "https://www.gerarlinkzap.com.br/:path*",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/:path*",
+      "headers": [
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=31536000; includeSubDomains"
+        }
+      ]
     }
   ]
 } 
