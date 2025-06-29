@@ -35,7 +35,7 @@ const MessageTemplates: React.FC<MessageTemplatesProps> = ({ onSelectTemplate })
         bgcolor: 'background.default',
         flexShrink: 0 // Impede que o cabeçalho encolha
       }}>
-        <Typography variant="h6" component="h3" sx={{ 
+        <Typography variant="h3" component="h3" sx={{ 
           fontSize: isMobile ? '1.1rem' : '1.25rem',
           mb: 1
         }}>
@@ -49,46 +49,31 @@ const MessageTemplates: React.FC<MessageTemplatesProps> = ({ onSelectTemplate })
       </Box>
 
       <List sx={{ 
-        overflow: 'auto',
+        overflowY: 'auto',
         flex: 1,
-        p: 0,
+        p: 2,
         '& > li': {
-          borderBottom: '1px solid',
-          borderColor: 'divider',
+          mb: 3,
           '&:last-child': {
-            borderBottom: 'none'
+            mb: 0
           }
-        },
-        // Estilização da scrollbar
-        '&::-webkit-scrollbar': {
-          width: '6px',
-          backgroundColor: 'transparent'
-        },
-        '&::-webkit-scrollbar-thumb': {
-          backgroundColor: 'action.hover',
-          borderRadius: '3px',
-          '&:hover': {
-            backgroundColor: 'action.selected'
-          }
-        },
-        // Firefox scrollbar
-        scrollbarWidth: 'thin',
-        scrollbarColor: 'action.hover transparent'
+        }
       }}>
         {messageTemplates.map((template) => (
           <ListItem 
             key={template.id}
-            button
             onClick={() => handleTemplateClick(template)}
-            sx={{
-              transition: 'all 0.2s',
-              '&:hover': {
-                bgcolor: 'action.hover',
-              },
-              p: isMobile ? 1.5 : 2, // Padding menor no mobile
+            sx={{ 
               display: 'flex',
               flexDirection: 'column',
-              alignItems: 'flex-start'
+              alignItems: 'flex-start',
+              cursor: 'pointer',
+              p: 2,
+              borderRadius: 1,
+              transition: 'background-color 0.2s',
+              '&:hover': {
+                bgcolor: 'action.hover'
+              }
             }}
           >
             <Box sx={{ 
@@ -99,7 +84,8 @@ const MessageTemplates: React.FC<MessageTemplatesProps> = ({ onSelectTemplate })
               mb: 1
             }}>
               <Typography 
-                variant="subtitle1" 
+                variant="h6"
+                component="h6"
                 sx={{ 
                   fontWeight: 500,
                   fontSize: isMobile ? '0.9rem' : '1rem'

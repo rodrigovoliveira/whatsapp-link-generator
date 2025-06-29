@@ -1,158 +1,143 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, ListItemIcon, ListItemText, Paper, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import { Box, Typography, Paper, Grid, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import ShareIcon from '@mui/icons-material/Share';
 
-const InfoSections = () => {
+const InfoSections: React.FC = () => {
+  const benefits = [
+    {
+      title: "Link do WhatsApp Profissional",
+      description: "Crie links personalizados para WhatsApp Business com mensagem pré-definida. Ideal para atendimento, vendas e marketing digital.",
+      icon: <WhatsAppIcon color="primary" />
+    },
+    {
+      title: "QR Code Personalizado",
+      description: "Gere QR Codes profissionais para seu WhatsApp. Perfeito para materiais impressos, cartões de visita e divulgação offline.",
+      icon: <QrCodeIcon color="primary" />
+    },
+    {
+      title: "Mensagens Automáticas",
+      description: "Configure mensagens prontas para seus clientes. Otimize seu atendimento com templates personalizados para cada situação.",
+      icon: <ShareIcon color="primary" />
+    }
+  ];
+
+  const features = [
+    "Geração instantânea de links para WhatsApp",
+    "Criação de QR Code personalizado grátis",
+    "Mensagens pré-definidas para marketing",
+    "Formatação de texto com negrito e itálico",
+    "Compatível com WhatsApp Business",
+    "Ideal para divulgação em redes sociais",
+    "Perfeito para materiais impressos",
+    "Otimizado para atendimento ao cliente",
+    "Suporte a emojis e caracteres especiais",
+    "Integração com campanhas de marketing"
+  ];
+
   return (
-    <Box sx={{ mt: 4 }}>
-      {/* Instruções Rápidas */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          Como usar o gerador de link do WhatsApp grátis:
-        </Typography>
-        <List>
-          {[
-            'Digite o número com DDD e DDI (ex: +55 11 99999-0000)',
-            'Escreva a mensagem que será enviada automaticamente',
-            'Clique em Gerar link gratuitamente',
-            'Copie o link ou leia o QR Code',
-            'Use onde quiser — sem custo'
-          ].map((text, index) => (
-            <ListItem key={index}>
-              <ListItemIcon>
-                <CheckCircleIcon sx={{ color: '#25D366' }} />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
-
-      {/* Exemplos Prontos */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Typography variant="h6" gutterBottom>
-          Modelos gratuitos de link do WhatsApp:
-        </Typography>
-        <List>
-          {[
-            {
-              title: 'Atendimento:',
-              link: 'https://wa.me/5511999999999?text=Olá,+gostaria+de+atendimento'
-            },
-            {
-              title: 'Vendas:',
-              link: 'https://wa.me/5511999999999?text=Oi,+tenho+interesse+no+produto'
-            },
-            {
-              title: 'Orçamento:',
-              link: 'https://wa.me/5511999999999?text=Olá,+gostaria+de+um+orçamento'
-            }
-          ].map((item, index) => (
-            <ListItem key={index}>
-              <Box>
-                <Typography variant="subtitle1">{item.title}</Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    wordBreak: 'break-all',
-                    color: 'text.secondary',
-                    fontFamily: 'monospace'
-                  }}
-                >
-                  {item.link}
-                </Typography>
-              </Box>
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
-
-      {/* QR Code Info */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <QrCodeIcon sx={{ fontSize: 40, color: '#25D366' }} />
-          <Typography variant="h6">
-            Crie QR Code do WhatsApp grátis
-          </Typography>
-        </Box>
-        <Typography variant="body1">
-          Ao gerar o link, criamos também um QR Code gratuitamente. Ele pode ser usado em cartões de visita, 
-          vitrines, materiais promocionais, panfletos ou catálogos físicos. O usuário escaneia e é direcionado 
-          direto para o WhatsApp, com a mensagem pronta.
-        </Typography>
-      </Paper>
-
-      {/* FAQs */}
-      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-          <HelpOutlineIcon sx={{ fontSize: 40, color: '#25D366' }} />
-          <Typography variant="h6">
-            Perguntas frequentes
-          </Typography>
-        </Box>
-        {[
-          {
-            question: 'Preciso pagar para usar?',
-            answer: 'Não. O gerador é 100% gratuito e sem limite de uso.'
-          },
-          {
-            question: 'Preciso fazer login ou me cadastrar?',
-            answer: 'Não. Você pode usar livremente, sem conta, login ou e-mail.'
-          },
-          {
-            question: 'Funciona com WhatsApp Business?',
-            answer: 'Sim, com qualquer conta do WhatsApp.'
-          },
-          {
-            question: 'O link ou QR Code expira?',
-            answer: 'Não. São permanentes e gratuitos.'
-          },
-          {
-            question: 'Esse serviço é mesmo grátis?',
-            answer: 'Sim. Você pode gerar quantos links e QR Codes quiser, sem custo.'
-          }
-        ].map((faq, index) => (
-          <Accordion 
-            key={index} 
-            sx={{ 
-              '&:before': { display: 'none' },
-              boxShadow: 'none',
-              backgroundColor: 'transparent'
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              sx={{ 
-                px: 1,
-                '&:hover': { backgroundColor: 'rgba(37, 211, 102, 0.04)' }
+    <Box sx={{ mt: 6, mb: 4 }}>
+      {/* Seção Principal de Benefícios */}
+      <Grid container spacing={3} sx={{ mb: 6 }}>
+        {benefits.map((benefit, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Paper 
+              elevation={3}
+              sx={{
+                p: 3,
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center'
               }}
             >
-              <Typography>{faq.question}</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ px: 1 }}>
-              <Typography color="text.secondary">
-                {faq.answer}
+              <Box sx={{ mb: 2 }}>
+                {benefit.icon}
+              </Box>
+              <Typography variant="h6" component="h2" gutterBottom>
+                {benefit.title}
               </Typography>
-            </AccordionDetails>
-          </Accordion>
+              <Typography variant="body2" color="text.secondary">
+                {benefit.description}
+              </Typography>
+            </Paper>
+          </Grid>
         ))}
+      </Grid>
+
+      {/* Seção de Recursos */}
+      <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          Recursos do Gerador de Link WhatsApp
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <List>
+              {features.slice(0, 5).map((feature, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    <CheckCircleIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary={feature} />
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <List>
+              {features.slice(5).map((feature, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    <CheckCircleIcon color="primary" />
+                  </ListItemIcon>
+                  <ListItemText primary={feature} />
+                </ListItem>
+              ))}
+            </List>
+          </Grid>
+        </Grid>
       </Paper>
 
-      {/* Call-to-action final */}
-      <Paper 
-        elevation={3} 
-        sx={{ 
-          p: 3, 
-          mb: 3, 
-          textAlign: 'center',
-          backgroundColor: 'rgba(37, 211, 102, 0.04)'
-        }}
-      >
-        <Typography variant="h6" gutterBottom>
-          Comece agora! Gere seu link do WhatsApp 100% grátis, copie o QR Code e compartilhe com seus clientes.
+      {/* Seção FAQ para SEO */}
+      <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          Perguntas Frequentes
+        </Typography>
+        <Box component="article">
+          <Typography variant="h6" component="h3" gutterBottom sx={{ mt: 2 }}>
+            Como criar um link para WhatsApp com mensagem?
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Para criar um link do WhatsApp com mensagem automática, basta inserir seu número de telefone e a mensagem desejada em nossa ferramenta. O link será gerado instantaneamente, pronto para ser compartilhado em suas redes sociais, site ou materiais de marketing.
+          </Typography>
+
+          <Typography variant="h6" component="h3" gutterBottom sx={{ mt: 2 }}>
+            Como gerar QR Code para WhatsApp?
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Após criar seu link personalizado, clique no botão "Gerar QR Code". Nossa ferramenta irá gerar um QR Code profissional que, quando escaneado, abre diretamente a conversa no WhatsApp com sua mensagem pré-definida.
+          </Typography>
+
+          <Typography variant="h6" component="h3" gutterBottom sx={{ mt: 2 }}>
+            O gerador de link para WhatsApp é gratuito?
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Sim! Nossa ferramenta é 100% gratuita e não requer cadastro. Você pode criar quantos links e QR Codes desejar, sem custos ou limitações. Ideal para empresas, profissionais e empreendedores que desejam otimizar sua comunicação no WhatsApp.
+          </Typography>
+        </Box>
+      </Paper>
+
+      {/* Seção de Chamada para Ação */}
+      <Paper elevation={3} sx={{ p: 4, mt: 4, textAlign: 'center' }}>
+        <Typography variant="h5" component="h2" gutterBottom>
+          Comece a Usar Agora!
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 2 }}>
+          Crie seus links personalizados para WhatsApp gratuitamente e otimize sua comunicação com clientes.
+          Gere QR Codes profissionais e aumente sua presença online e offline.
         </Typography>
       </Paper>
     </Box>

@@ -2,43 +2,85 @@
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="theme-color" content="#25D366" />
     <meta
       name="description"
-      content="Gerador de links do WhatsApp com mensagem pronta e QR Code. Crie links personalizados para WhatsApp com número, mensagem pronta e QR Code de forma totalmente gratuita."
+      content="Crie links do WhatsApp com mensagem automática e QR Code gratuitamente. Ferramenta online para gerar links personalizados do WhatsApp para seu negócio. Sem cadastro, rápido e fácil de usar."
     />
-    <meta name="keywords" content="whatsapp, link whatsapp, gerador link whatsapp, qr code whatsapp, mensagem automática whatsapp, link whatsapp grátis" />
-    <meta property="og:title" content="Gerador de Link para WhatsApp Grátis com QR Code e Mensagem Pronta" />
-    <meta property="og:description" content="Ferramenta gratuita para criar links de WhatsApp com texto automático e QR Code. Sem login, sem custo, ideal para vendas, atendimento e redes sociais." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+    <meta name="keywords" content="gerar link whatsapp, link whatsapp com mensagem, criar qr code whatsapp, gerador de link whatsapp, whatsapp business link, link para whatsapp comercial, mensagem automática whatsapp, whatsapp marketing, link personalizado whatsapp, qr code para whatsapp" />
+    <meta name="author" content="GerarLinkZap" />
+    <meta name="robots" content="index, follow" />
     
-    <!-- Preconnect para domínios externos -->
+    <!-- URL Canônica -->
+    <link rel="canonical" href="https://www.gerarlinkzap.com.br" />
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "GerarLinkZap - Gerador de Link WhatsApp",
+      "url": "https://www.gerarlinkzap.com.br",
+      "description": "Ferramenta gratuita para criar links do WhatsApp com mensagem automática e QR Code. Ideal para empresas e profissionais.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "BRL"
+      }
+    }
+    </script>
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.gerarlinkzap.com.br" />
+    <meta property="og:title" content="GerarLinkZap - Crie Links e QR Codes para WhatsApp Grátis" />
+    <meta property="og:description" content="Crie links do WhatsApp com mensagem automática e QR Code gratuitamente. Ferramenta online para gerar links personalizados do WhatsApp para seu negócio. Sem cadastro, rápido e fácil de usar." />
+    <meta property="og:image" content="https://www.gerarlinkzap.com.br/logo512.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="GerarLinkZap - Gerador de Link WhatsApp" />
+    <meta property="og:locale" content="pt_BR" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://www.gerarlinkzap.com.br" />
+    <meta name="twitter:title" content="GerarLinkZap - Crie Links e QR Codes para WhatsApp Grátis" />
+    <meta name="twitter:description" content="Crie links do WhatsApp com mensagem automática e QR Code gratuitamente. Ferramenta online para gerar links personalizados do WhatsApp para seu negócio." />
+    <meta name="twitter:image" content="https://www.gerarlinkzap.com.br/logo512.png" />
+    <meta name="twitter:image:alt" content="GerarLinkZap - Gerador de Link WhatsApp" />
+
+    <!-- Ícones -->
+    <link rel="icon" href="%PUBLIC_URL%/logo.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- Preconnect e Preload -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     
-    <title>Gerador de Link WhatsApp - Crie links e QR Code grátis</title>
+    <title>GerarLinkZap - Crie Links e QR Codes para WhatsApp Grátis | Gerador de Link WhatsApp</title>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9X9BYPNZKZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-9X9BYPNZKZ');
+    </script>
   </head>
   <body>
-    <noscript>Você precisa habilitar o JavaScript para usar este app.</noscript>
+    <noscript>
+      <h1>Gerador de Link WhatsApp</h1>
+      <p>Você precisa habilitar o JavaScript para usar este gerador de links para WhatsApp.</p>
+    </noscript>
     <div id="root"></div>
     <!--
       This HTML file is a template.

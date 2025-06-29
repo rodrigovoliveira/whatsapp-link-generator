@@ -28,7 +28,6 @@
     "react-dom": "^18.2.0",
     "react-phone-number-input": "^3.3.0",
     "react-router-dom": "^6.14.2",
-    "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -62,6 +61,7 @@
     "@types/qrcode.react": "^1.0.5",
     "@types/react-input-mask": "^3.0.6",
     "http-server": "^14.1.1",
+    "react-scripts": "^5.0.1",
     "serve": "^14.2.4",
     "source-map-explorer": "^2.5.3"
   }
