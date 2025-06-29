@@ -1,42 +1,50 @@
 # robots.txt para gerarlinkzap.com.br
 # Configuração otimizada para SEO seguindo diretrizes do Google
 
+# Configurações globais para todos os bots
 User-agent: *
-Allow: /
-
-# Permitir recursos essenciais
-Allow: *.js
-Allow: *.css
-Allow: *.jpg
-Allow: *.jpeg
-Allow: *.gif
-Allow: *.png
-Allow: *.svg
-Allow: *.ico
-
-# Bloquear URLs duplicadas ou não necessárias para indexação
-Disallow: /*?
-Disallow: /*&
-Disallow: /search
+Allow: /gerar-link-whatsapp
+Allow: /gerar-qr-code
+Allow: /logo.png
+Allow: /logo192.png
+Allow: /logo512.png
+Allow: /manifest.json
+Allow: /sitemap.xml
+Disallow: /static/
 Disallow: /api/
-Disallow: /*.json$
-Disallow: /*.xml$
+Disallow: /*.js$
+Disallow: /*.css$
 
-# Crawl-delay para bots genéricos (em segundos)
-Crawl-delay: 1
-
-# Configurações específicas para bots principais
+# Configurações específicas para o Googlebot
 User-agent: Googlebot
-Crawl-delay: 0
+Allow: /gerar-link-whatsapp
+Allow: /gerar-qr-code
+Allow: /logo.png
+Allow: /logo192.png
+Allow: /logo512.png
+Allow: /manifest.json
+Allow: /sitemap.xml
+Disallow: /static/
+Disallow: /api/
+Disallow: /*.js$
+Disallow: /*.css$
 
+# Configurações específicas para o Bingbot
 User-agent: Bingbot
-Crawl-delay: 0
+Allow: /gerar-link-whatsapp
+Allow: /gerar-qr-code
+Allow: /logo.png
+Allow: /logo192.png
+Allow: /logo512.png
+Allow: /manifest.json
+Allow: /sitemap.xml
+Disallow: /static/
+Disallow: /api/
+Disallow: /*.js$
+Disallow: /*.css$
 
-User-agent: Yandex
-Crawl-delay: 0
-
-# Sitemaps
+# Sitemap
 Sitemap: https://www.gerarlinkzap.com.br/sitemap.xml
 
-# Host preferido (canonical)
-Host: https://www.gerarlinkzap.com.br
+# Host
+Host: www.gerarlinkzap.com.br

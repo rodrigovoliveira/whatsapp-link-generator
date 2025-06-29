@@ -1,0 +1,26 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "geraqrzap.com.br"
+        }
+      ],
+      "destination": "https://gerarlinkzap.com.br/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.geraqrzap.com.br"
+        }
+      ],
+      "destination": "https://gerarlinkzap.com.br/:path*",
+      "permanent": true
+    }
+  ]
+} 

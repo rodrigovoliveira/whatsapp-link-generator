@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, lazy, Suspense, useRef } from 'react';
-import { Box, TextField, Stack, Button, Snackbar, CircularProgress, IconButton, Tooltip, Typography, Paper, Alert, Popover } from '@mui/material';
+import { Box, TextField, Stack, Button, Snackbar, CircularProgress, IconButton, Tooltip, Typography, Paper, Popover } from '@mui/material';
 import PhoneInput, { Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -17,9 +17,10 @@ import { useNavigate } from 'react-router-dom';
 import { detectUserCountry } from '../services/locationService';
 import MessageTemplates from './MessageTemplates';
 import InfoSections from './InfoSections';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { validatePhone, validateMessage, sanitizeInput } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
+import AdUnit from './AdUnit';
+import QuickInstructions from './QuickInstructions';
 
 // Lazy load do Emoji Picker
 const Picker = lazy(() => import('@emoji-mart/react'));
@@ -256,14 +257,6 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
     }, 100);
   };
 
-  // Função para lidar com navegação por teclado
-  const handleKeyboardNavigation = (e: React.KeyboardEvent, action: () => void) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      action();
-    }
-  };
-
   const scrollToTemplates = () => {
     if (messageTemplatesRef.current) {
       messageTemplatesRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -271,192 +264,114 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
   };
 
   return (
-    <Box component="main" sx={{ 
-      p: { xs: 2, sm: 3 }, 
-      width: '100%', 
-      maxWidth: '1200px', 
-      mx: 'auto',
-      pt: { xs: '70px', sm: 3 }
-    }}>
+    <Box sx={{ width: '100%', p: { xs: 2, sm: 3 } }}>
       <Typography 
-        variant="h6" 
-        component="h6" 
-        gutterBottom 
-        align="center"
-        sx={{ color: 'text.secondary' }}
+        variant="h1" 
+        sx={{ 
+          fontSize: { xs: '1.5rem', sm: '2rem' },
+          mb: 3,
+          textAlign: 'center',
+          color: 'primary.main'
+        }}
       >
-        GERAR LINK WHATSAPP
+        Crie seu Link WhatsApp
       </Typography>
 
       <Typography 
-        variant="h6" 
-        component="h6" 
-        gutterBottom 
-        align="center"
-        sx={{ color: 'text.secondary' }}
+        variant="subtitle1" 
+        sx={{ 
+          mb: 4,
+          textAlign: 'center',
+          color: 'text.secondary'
+        }}
       >
-        GERAR QR CODE
+        Gere links personalizados para WhatsApp com mensagem pré-definida. Sem login e sem custo – basta inserir o número e a mensagem.
       </Typography>
 
-      {/* Título e Subtítulo */}
-      <Box sx={{ textAlign: 'center', mb: 2 }}>
-        <Typography 
-          variant="h1" 
-          component="h1" 
-          gutterBottom 
-          align="center" 
+      <QuickInstructions />
+
+      <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 6 }}>
+        <Paper 
+          elevation={2} 
           sx={{ 
-            mb: 4, 
-            color: 'text.primary',
-            fontSize: { xs: '1.5rem', sm: '2.5rem' },
-            mt: { xs: 1, sm: 0 }
+            p: { xs: 2, sm: 3 }
           }}
         >
-          Crie seu Link para WhatsApp Grátis
-        </Typography>
-        
-        <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary', textAlign: 'center' }}>
-          Gere links personalizados para WhatsApp com mensagem pré-definida. Sem login e sem custo – basta inserir o número e a mensagem.
-        </Typography>
-      </Box>
-
-      <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
-        Instruções rápidas:
-      </Typography>
-
-      <Stack spacing={2} sx={{ mb: 4 }}>
-        <Typography variant="body1">1. Digite o número com DDD e DDI (ex: +55 11 99999-0000)</Typography>
-        <Typography variant="body1">2. Escreva a mensagem automática</Typography>
-        <Typography variant="body1">3. Clique em "Gerar link gratuitamente"</Typography>
-        <Typography variant="body1">4. Copie o link ou leia o QR Code</Typography>
-        <Typography variant="body1">5. Use onde quiser</Typography>
-      </Stack>
-
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: { xs: 'column', md: 'row' },
-        gap: 3,
-        mb: 4
-      }}>
-        {/* Coluna principal - Formulário */}
-        <Box sx={{ flex: 1 }}>
-          <Paper elevation={3} sx={{ p: 3 }}>
-            <Box>
-              <Typography variant="h6" component="h6" sx={{ color: 'text.primary', mb: 2 }}>
-                Número do WhatsApp
+          <Box>
+            <Typography variant="h6" component="h6" sx={{ color: 'text.primary', mb: 2 }}>
+              Número do WhatsApp
+            </Typography>
+            <PhoneInput
+              international
+              defaultCountry={defaultCountry}
+              value={phone}
+              onChange={handlePhoneChange}
+              disabled={isLoadingCountry}
+              error={phoneError}
+              aria-label="Número do WhatsApp"
+              sx={{
+                '& .PhoneInputInput': {
+                  width: '100%',
+                  p: 1.5,
+                  borderRadius: 1,
+                  border: '1px solid',
+                  borderColor: 'divider',
+                  bgcolor: 'background.paper',
+                  color: 'text.primary',
+                }
+              }}
+            />
+            {phoneError && (
+              <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
+                {phoneError}
               </Typography>
-              <PhoneInput
-                international
-                defaultCountry={defaultCountry}
-                value={phone}
-                onChange={handlePhoneChange}
-                disabled={isLoadingCountry}
-                error={phoneError}
-                aria-label="Número do WhatsApp"
+            )}
+          </Box>
+
+          <Box>
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              mb: 1
+            }}>
+              <Typography variant="h6" component="h6" sx={{ color: 'text.primary' }}>
+                Mensagem (opcional)
+              </Typography>
+              <Button
+                variant="text"
+                color="secondary"
+                size="small"
+                onClick={scrollToTemplates}
                 sx={{
-                  '& .PhoneInputInput': {
-                    width: '100%',
-                    p: 1.5,
-                    borderRadius: 1,
-                    border: '1px solid',
-                    borderColor: 'divider',
-                    bgcolor: 'background.paper',
-                    color: 'text.primary',
+                  textTransform: 'none',
+                  fontSize: { xs: '0.8rem', sm: '0.875rem' },
+                  '&:hover': {
+                    backgroundColor: 'action.hover'
                   }
                 }}
-              />
-              {phoneError && (
-                <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                  {phoneError}
-                </Typography>
-              )}
+              >
+                Ver mensagens prontas ↓
+              </Button>
             </Box>
 
-            <Box>
-              <Box sx={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center',
-                mb: 1
-              }}>
-                <Typography variant="h6" component="h6" sx={{ color: 'text.primary' }}>
-                  Mensagem (opcional)
-                </Typography>
-                <Button
-                  variant="text"
-                  color="secondary"
-                  size="small"
-                  onClick={scrollToTemplates}
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: { xs: '0.8rem', sm: '0.875rem' },
-                    '&:hover': {
-                      backgroundColor: 'action.hover'
-                    }
-                  }}
-                >
-                  Ver mensagens prontas ↓
-                </Button>
-              </Box>
-
-              {/* Barra de formatação móvel */}
-              <Paper 
-                elevation={1} 
-                sx={{ 
-                  p: 1, 
-                  mb: 2,
-                  display: { xs: 'block', sm: 'none' },
-                  bgcolor: 'background.default'
-                }}
-              >
-                <Stack 
-                  direction="row" 
-                  spacing={1} 
-                  sx={{ 
-                    flexWrap: 'wrap',
-                    gap: 1,
-                    justifyContent: 'center'
-                  }}
-                >
-                  {formatButtons.map((btn) => (
-                    <Tooltip key={btn.type} title={btn.tooltip}>
-                      <IconButton
-                        onClick={() => handleFormat(btn.type)}
-                        size="small"
-                        aria-label={btn.tooltip}
-                        sx={{
-                          bgcolor: 'background.paper',
-                          '&:hover': { bgcolor: 'action.hover' }
-                        }}
-                      >
-                        {btn.icon}
-                      </IconButton>
-                    </Tooltip>
-                  ))}
-                  
-                  <Tooltip title="Adicionar emoji">
-                    <IconButton
-                      onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
-                      size="small"
-                      aria-label="Adicionar emoji"
-                      sx={{ 
-                        bgcolor: 'background.paper',
-                        '&:hover': { bgcolor: 'action.hover' }
-                      }}
-                    >
-                      <EmojiEmotionsIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Stack>
-              </Paper>
-
-              {/* Barra de formatação desktop */}
+            {/* Barra de formatação móvel */}
+            <Paper 
+              elevation={1} 
+              sx={{ 
+                p: 1, 
+                mb: 2,
+                display: { xs: 'block', sm: 'none' },
+                bgcolor: 'background.default'
+              }}
+            >
               <Stack 
                 direction="row" 
                 spacing={1} 
                 sx={{ 
-                  mb: 2,
-                  display: { xs: 'none', sm: 'flex' }
+                  flexWrap: 'wrap',
+                  gap: 1,
+                  justifyContent: 'center'
                 }}
               >
                 {formatButtons.map((btn) => (
@@ -465,6 +380,10 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                       onClick={() => handleFormat(btn.type)}
                       size="small"
                       aria-label={btn.tooltip}
+                      sx={{
+                        bgcolor: 'background.paper',
+                        '&:hover': { bgcolor: 'action.hover' }
+                      }}
                     >
                       {btn.icon}
                     </IconButton>
@@ -476,133 +395,169 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                     onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
                     size="small"
                     aria-label="Adicionar emoji"
+                    sx={{ 
+                      bgcolor: 'background.paper',
+                      '&:hover': { bgcolor: 'action.hover' }
+                    }}
                   >
                     <EmojiEmotionsIcon />
                   </IconButton>
                 </Tooltip>
               </Stack>
+            </Paper>
 
-              <TextField
-                multiline
-                rows={4}
-                fullWidth
-                value={message}
-                onChange={(e) => handleMessageChange(e.target.value)}
-                placeholder="Digite sua mensagem aqui..."
-                error={!!messageError}
-                helperText={messageError}
-                aria-label="Mensagem"
-                sx={{
-                  '& .MuiInputBase-input': {
-                    color: 'text.primary',
-                  }
-                }}
-                inputRef={messageInputRef}
-              />
-            </Box>
-
-            <Box ref={messageTemplatesRef}>
-              <Paper elevation={0} sx={{ p: 0, bgcolor: 'background.default' }}>
-                <MessageTemplates onSelectTemplate={handleTemplateSelected} />
-              </Paper>
-            </Box>
-
-            {/* Link gerado */}
-            {generatedLink && (
-              <Paper 
-                elevation={1} 
-                sx={{ 
-                  p: 2, 
-                  bgcolor: 'success.light',
-                  color: 'success.contrastText',
-                  borderRadius: 1
-                }}
-              >
-                <Typography variant="subtitle2" gutterBottom>
-                  Link gerado com sucesso:
-                </Typography>
-                <Typography 
-                  variant="body2" 
-                  sx={{ 
-                    wordBreak: 'break-all',
-                    fontFamily: 'monospace',
-                    mb: 2
-                  }}
-                >
-                  {generatedLink}
-                </Typography>
-              </Paper>
-            )}
-
-            {/* Botões de ação responsivos */}
+            {/* Barra de formatação desktop */}
             <Stack 
-              spacing={2} 
+              direction="row" 
+              spacing={1} 
               sx={{ 
-                flexDirection: { xs: 'column', sm: 'row' },
-                justifyContent: 'center'
+                mb: 2,
+                display: { xs: 'none', sm: 'flex' }
               }}
             >
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleTestWhatsApp}
-                disabled={!generatedLink}
-                startIcon={<WhatsAppIcon />}
-                aria-label="Testar no WhatsApp"
-                fullWidth
-                sx={{ 
-                  minWidth: { sm: 200 },
-                  py: { xs: 1.5, sm: 1 }
-                }}
-              >
-                Testar no WhatsApp
-              </Button>
-
-              <Button
-                variant="outlined"
-                onClick={handleCopyLink}
-                disabled={!generatedLink}
-                startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
-                aria-label="Copiar link"
-                fullWidth
-                sx={{ 
-                  minWidth: { sm: 160 },
-                  py: { xs: 1.5, sm: 1 }
-                }}
-              >
-                {copySuccess ? 'Copiado!' : 'Copiar link'}
-              </Button>
-
-              <Button
-                variant="outlined"
-                onClick={handleGenerateQRCode}
-                disabled={!generatedLink}
-                startIcon={<QrCodeIcon />}
-                aria-label="Gerar QR Code"
-                fullWidth
-                sx={{ 
-                  minWidth: { sm: 160 },
-                  py: { xs: 1.5, sm: 1 }
-                }}
-              >
-                QR Code
-              </Button>
+              {formatButtons.map((btn) => (
+                <Tooltip key={btn.type} title={btn.tooltip}>
+                  <IconButton
+                    onClick={() => handleFormat(btn.type)}
+                    size="small"
+                    aria-label={btn.tooltip}
+                  >
+                    {btn.icon}
+                  </IconButton>
+                </Tooltip>
+              ))}
+              
+              <Tooltip title="Adicionar emoji">
+                <IconButton
+                  onClick={(e) => setEmojiAnchorEl(e.currentTarget)}
+                  size="small"
+                  aria-label="Adicionar emoji"
+                >
+                  <EmojiEmotionsIcon />
+                </IconButton>
+              </Tooltip>
             </Stack>
 
-            <Button
-              variant="text"
-              onClick={onReset}
-              startIcon={<RestartAltIcon />}
-              aria-label="Limpar campos"
+            <TextField
+              multiline
+              rows={4}
+              fullWidth
+              value={message}
+              onChange={(e) => handleMessageChange(e.target.value)}
+              placeholder="Digite sua mensagem aqui..."
+              error={!!messageError}
+              helperText={messageError}
+              aria-label="Mensagem"
+              sx={{
+                '& .MuiInputBase-input': {
+                  color: 'text.primary',
+                }
+              }}
+              inputRef={messageInputRef}
+            />
+          </Box>
+
+          <Box ref={messageTemplatesRef}>
+            <Paper elevation={0} sx={{ p: 0, bgcolor: 'background.default' }}>
+              <MessageTemplates onSelectTemplate={handleTemplateSelected} />
+            </Paper>
+          </Box>
+
+          {/* Link gerado */}
+          {generatedLink && (
+            <Paper 
+              elevation={1} 
               sx={{ 
-                alignSelf: 'center',
+                p: 2, 
+                bgcolor: 'success.light',
+                color: 'success.contrastText',
+                borderRadius: 1
+              }}
+            >
+              <Typography variant="subtitle2" gutterBottom>
+                Link gerado com sucesso:
+              </Typography>
+              <Typography 
+                variant="body2" 
+                sx={{ 
+                  wordBreak: 'break-all',
+                  fontFamily: 'monospace',
+                  mb: 2
+                }}
+              >
+                {generatedLink}
+              </Typography>
+            </Paper>
+          )}
+
+          {/* Botões de ação responsivos */}
+          <Stack 
+            spacing={2} 
+            sx={{ 
+              flexDirection: { xs: 'column', sm: 'row' },
+              justifyContent: 'center'
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleTestWhatsApp}
+              disabled={!generatedLink}
+              startIcon={<WhatsAppIcon />}
+              aria-label="Testar no WhatsApp"
+              fullWidth
+              sx={{ 
+                minWidth: { sm: 200 },
                 py: { xs: 1.5, sm: 1 }
               }}
             >
-              Limpar campos
+              Testar no WhatsApp
             </Button>
-          </Paper>
-        </Box>
+
+            <Button
+              variant="outlined"
+              onClick={handleCopyLink}
+              disabled={!generatedLink}
+              startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
+              aria-label="Copiar link"
+              fullWidth
+              sx={{ 
+                minWidth: { sm: 160 },
+                py: { xs: 1.5, sm: 1 }
+              }}
+            >
+              {copySuccess ? 'Copiado!' : 'Copiar link'}
+            </Button>
+
+            <Button
+              variant="outlined"
+              onClick={handleGenerateQRCode}
+              disabled={!generatedLink}
+              startIcon={<QrCodeIcon />}
+              aria-label="Gerar QR Code"
+              fullWidth
+              sx={{ 
+                minWidth: { sm: 160 },
+                py: { xs: 1.5, sm: 1 }
+              }}
+            >
+              QR Code
+            </Button>
+          </Stack>
+
+          <Button
+            variant="text"
+            onClick={onReset}
+            startIcon={<RestartAltIcon />}
+            aria-label="Limpar campos"
+            sx={{ 
+              alignSelf: 'center',
+              py: { xs: 1.5, sm: 1 }
+            }}
+          >
+            Limpar campos
+          </Button>
+        </Paper>
       </Box>
 
       <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
@@ -636,6 +591,13 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         onClose={() => setOpenSnackbar(false)}
         message={snackbarMessage || (copySuccess ? 'Link copiado com sucesso! 🔗' : '')}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
+
+      {/* Anúncio após o conteúdo principal */}
+      <AdUnit 
+        slot="5437524755"
+        format="auto"
+        style={{ marginTop: '2rem' }}
       />
     </Box>
   );
