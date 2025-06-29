@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import ImageCropModal from './ImageCropModal';
 import { validateImageFile } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
+import AdUnit from './AdUnit';
+import InfoSections from './InfoSections';
 
 interface QRCodeGeneratorProps {
   whatsappLink: string;
@@ -516,6 +518,15 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
           </Snackbar>
         </Stack>
       </Paper>
+
+      <InfoSections />
+
+      {/* Anúncio após o conteúdo principal */}
+      <AdUnit 
+        slot="7894251366"
+        format="auto"
+        style={{ marginTop: '2rem' }}
+      />
     </Box>
   );
 };
