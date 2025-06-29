@@ -3,9 +3,11 @@ import { Box, AppBar, Toolbar, Typography, Stack, Link as MuiLink } from '@mui/m
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import WhatsAppLinkGenerator from './components/WhatsAppLinkGenerator';
 import QRCodeGenerator from './components/QRCodeGenerator';
 import ThemeToggle from './components/ThemeToggle';
+import SEOHead from './components/SEOHead';
 
 const MenuButton = ({ to, icon, text, isSelected }: { to: string; icon: React.ReactNode; text: string; isSelected: boolean }) => (
   <Link 
@@ -53,113 +55,121 @@ function App() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <MuiLink
-        href="#main-content"
-        className="skip-link"
-        sx={{
-          position: 'absolute',
-          top: '-40px',
-          left: 0,
-          backgroundColor: 'primary.main',
-          color: 'primary.contrastText',
-          padding: '8px 16px',
-          zIndex: 2000,
-          textDecoration: 'none',
-          '&:focus': {
-            top: 0,
-          },
-        }}
-      >
-        Pular para o conteúdo principal
-      </MuiLink>
+    <HelmetProvider>
+      <Box sx={{ flexGrow: 1 }}>
+        <MuiLink
+          href="#main-content"
+          className="skip-link"
+          sx={{
+            position: 'absolute',
+            top: '-40px',
+            left: 0,
+            backgroundColor: 'primary.main',
+            color: 'primary.contrastText',
+            padding: '8px 16px',
+            zIndex: 2000,
+            textDecoration: 'none',
+            '&:focus': {
+              top: 0,
+            },
+          }}
+        >
+          Pular para o conteúdo principal
+        </MuiLink>
 
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          backgroundColor: 'primary.main',
-          color: 'primary.contrastText'
-        }}
-      >
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Link 
-              to="/" 
-              style={{ 
-                textDecoration: 'none', 
-                display: 'flex', 
-                alignItems: 'center' 
-              }}
-            >
-              <img 
-                src={`${process.env.PUBLIC_URL}/logo.png`}
-                alt="Gerar Link QR" 
+        <AppBar 
+          position="fixed" 
+          sx={{ 
+            backgroundColor: 'primary.main',
+            color: 'primary.contrastText'
+          }}
+        >
+          <Toolbar sx={{ justifyContent: 'space-between' }}>
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Link 
+                to="/" 
                 style={{ 
-                  height: '40px',
-                  width: 'auto',
-                  marginRight: '16px'
-                }} 
-              />
-            </Link>
-            <Stack 
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={{ xs: 1, sm: 0 }}
-            >
-              <MenuButton 
-                to="/gerar-link-whatsapp" 
-                icon={<WhatsAppIcon />} 
-                text="GERAR LINK WHATSAPP"
-                isSelected={location.pathname === '/gerar-link-whatsapp'}
-              />
-              <MenuButton 
-                to="/gerar-qr-code" 
-                icon={<QrCodeIcon />} 
-                text="GERAR QR CODE"
-                isSelected={location.pathname === '/gerar-qr-code'}
-              />
+                  textDecoration: 'none', 
+                  display: 'flex', 
+                  alignItems: 'center' 
+                }}
+              >
+                <img 
+                  src={`${process.env.PUBLIC_URL}/logo.png`}
+                  alt="Gerar Link QR" 
+                  style={{ 
+                    height: '40px',
+                    width: 'auto',
+                    marginRight: '16px'
+                  }} 
+                />
+              </Link>
+              <Stack 
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 0 }}
+              >
+                <MenuButton 
+                  to="/gerar-link-whatsapp" 
+                  icon={<WhatsAppIcon />} 
+                  text="GERAR LINK WHATSAPP"
+                  isSelected={location.pathname === '/gerar-link-whatsapp'}
+                />
+                <MenuButton 
+                  to="/gerar-qr-code" 
+                  icon={<QrCodeIcon />} 
+                  text="GERAR QR CODE"
+                  isSelected={location.pathname === '/gerar-qr-code'}
+                />
+              </Stack>
             </Stack>
-          </Stack>
-          <ThemeToggle />
-        </Toolbar>
-      </AppBar>
+            <ThemeToggle />
+          </Toolbar>
+        </AppBar>
 
-      <Box 
-        component="main"
-        id="main-content"
-        tabIndex={-1}
-        sx={{ 
-          mt: { xs: 10, sm: 8 }, 
-          p: { xs: 2, sm: 3 },
-          minHeight: 'calc(100vh - 64px)',
-          outline: 'none'
-        }}
-      >
-        <Routes>
-          <Route path="/" element={<Navigate to="/gerar-link-whatsapp" replace />} />
-          <Route 
-            path="/gerar-link-whatsapp" 
-            element={
-              <WhatsAppLinkGenerator 
-                onLinkGenerated={setGeneratedLink}
-                phone={phone}
-                message={message}
-                onPhoneChange={handlePhoneChange}
-                onMessageChange={handleMessageChange}
-                onReset={handleReset}
-              />
-            } 
-          />
-          <Route 
-            path="/gerar-qr-code" 
-            element={
-              <QRCodeGenerator 
-                whatsappLink={generatedLink}
-              />
-            } 
-          />
-        </Routes>
+        <Box 
+          component="main"
+          id="main-content"
+          tabIndex={-1}
+          sx={{ 
+            mt: { xs: 10, sm: 8 }, 
+            p: { xs: 2, sm: 3 },
+            minHeight: 'calc(100vh - 64px)',
+            outline: 'none'
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Navigate to="/gerar-link-whatsapp" replace />} />
+            <Route 
+              path="/gerar-link-whatsapp" 
+              element={
+                <>
+                  <SEOHead page="link" />
+                  <WhatsAppLinkGenerator 
+                    onLinkGenerated={setGeneratedLink}
+                    phone={phone}
+                    message={message}
+                    onPhoneChange={handlePhoneChange}
+                    onMessageChange={handleMessageChange}
+                    onReset={handleReset}
+                  />
+                </>
+              } 
+            />
+            <Route 
+              path="/gerar-qr-code" 
+              element={
+                <>
+                  <SEOHead page="qr" />
+                  <QRCodeGenerator 
+                    whatsappLink={generatedLink}
+                  />
+                </>
+              } 
+            />
+          </Routes>
+        </Box>
       </Box>
-    </Box>
+    </HelmetProvider>
   );
 }
 

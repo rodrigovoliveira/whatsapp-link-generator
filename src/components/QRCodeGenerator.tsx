@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Box, Button, Typography, Paper, Stack, Alert, Accordion, AccordionSummary, AccordionDetails, Snackbar, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Box, Button, Typography, Paper, Stack, Alert, Accordion, AccordionSummary, AccordionDetails, Snackbar } from '@mui/material';
 import { QRCodeSVG } from 'qrcode.react';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -7,7 +7,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useNavigate } from 'react-router-dom';
 import ImageCropModal from './ImageCropModal';
 import { validateImageFile } from '../utils/validation';

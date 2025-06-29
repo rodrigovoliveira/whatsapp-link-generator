@@ -15,7 +15,7 @@
   <!-- Página principal de geração de link -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-link-whatsapp</loc>
-    <lastmod>2024-03-19</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -23,9 +23,9 @@
   <!-- Página de geração de QR Code -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-qr-code</loc>
-    <lastmod>2024-03-19</lastmod>
+    <lastmod>2024-03-20</lastmod>
     <changefreq>daily</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset> 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, lazy, Suspense, useRef } from 'react';
-import { Box, TextField, Stack, Button, Snackbar, CircularProgress, IconButton, Tooltip, Typography, Paper, Alert, Popover } from '@mui/material';
+import { Box, TextField, Stack, Button, Snackbar, CircularProgress, IconButton, Tooltip, Typography, Paper, Popover } from '@mui/material';
 import PhoneInput, { Country } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
@@ -17,7 +17,6 @@ import { useNavigate } from 'react-router-dom';
 import { detectUserCountry } from '../services/locationService';
 import MessageTemplates from './MessageTemplates';
 import InfoSections from './InfoSections';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { validatePhone, validateMessage, sanitizeInput } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
 
@@ -254,14 +253,6 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         messageInputRef.current.focus();
       }
     }, 100);
-  };
-
-  // Função para lidar com navegação por teclado
-  const handleKeyboardNavigation = (e: React.KeyboardEvent, action: () => void) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      action();
-    }
   };
 
   const scrollToTemplates = () => {

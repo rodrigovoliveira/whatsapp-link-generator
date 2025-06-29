@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, List, ListItem, ListItemText, useTheme, useMediaQuery, Chip } from '@mui/material';
+import { Box, Typography, List, ListItem, useTheme, useMediaQuery, Chip } from '@mui/material';
 import { messageTemplates, MessageTemplate } from '../data/messageTemplates';
 
 interface MessageTemplatesProps {
