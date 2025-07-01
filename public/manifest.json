@@ -4,20 +4,26 @@
   "description": "Crie links personalizados para WhatsApp com mensagem pronta e QR Code grátis",
   "icons": [
     {
+      "src": "logo.webp",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
       "src": "logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
+      "src": "logo.webp",
+      "type": "image/webp",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "logo512.png",
-      "type": "image/png",
+      "src": "logo.webp",
+      "type": "image/webp",
       "sizes": "512x512",
       "purpose": "any maskable"
     }

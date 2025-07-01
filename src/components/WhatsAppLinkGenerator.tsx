@@ -19,7 +19,6 @@ import MessageTemplates from './MessageTemplates';
 import InfoSections from './InfoSections';
 import { validatePhone, validateMessage, sanitizeInput } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
-import AdUnit from './AdUnit';
 import QuickInstructions from './QuickInstructions';
 
 // Lazy load do Emoji Picker
@@ -288,13 +287,16 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         Gere links personalizados para WhatsApp com mensagem pré-definida. Sem login e sem custo – basta inserir o número e a mensagem.
       </Typography>
 
-      <QuickInstructions />
-
-      <Box sx={{ maxWidth: '600px', mx: 'auto', mt: 6 }}>
+      <Box sx={{ maxWidth: '600px', mx: 'auto' }}>
         <Paper 
           elevation={2} 
           sx={{ 
-            p: { xs: 2, sm: 3 }
+            p: { xs: 2, sm: 3 },
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3,
+            maxHeight: { xs: 'auto', sm: '800px' },
+            overflow: 'auto'
           }}
         >
           <Box>
@@ -462,19 +464,29 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               <MessageTemplates onSelectTemplate={handleTemplateSelected} />
             </Paper>
           </Box>
+        </Paper>
 
-          {/* Link gerado */}
+        {/* Link gerado - Movido para fora do Paper principal */}
           {generatedLink && (
             <Paper 
               elevation={1} 
               sx={{ 
-                p: 2, 
+              p: 3,
+              mt: 3,
                 bgcolor: 'success.light',
+              color: 'success.contrastText',
+              borderRadius: 1,
+              width: '100%'
+            }}
+          >
+            <Typography 
+              variant="subtitle2" 
+              gutterBottom
+              sx={{
                 color: 'success.contrastText',
-                borderRadius: 1
+                fontWeight: 'bold'
               }}
             >
-              <Typography variant="subtitle2" gutterBottom>
                 Link gerado com sucesso:
               </Typography>
               <Typography 
@@ -482,33 +494,38 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                 sx={{ 
                   wordBreak: 'break-all',
                   fontFamily: 'monospace',
-                  mb: 2
+                mb: 2,
+                fontSize: '1rem',
+                color: 'success.contrastText',
+                opacity: 0.9
                 }}
               >
                 {generatedLink}
               </Typography>
-            </Paper>
-          )}
 
           {/* Botões de ação responsivos */}
           <Stack 
             spacing={2} 
             sx={{ 
+                mt: 3,
               flexDirection: { xs: 'column', sm: 'row' },
               justifyContent: 'center'
             }}
           >
             <Button
               variant="contained"
-              color="primary"
               onClick={handleTestWhatsApp}
-              disabled={!generatedLink}
               startIcon={<WhatsAppIcon />}
               aria-label="Testar no WhatsApp"
               fullWidth
               sx={{ 
                 minWidth: { sm: 200 },
-                py: { xs: 1.5, sm: 1 }
+                  py: { xs: 1.5, sm: 1 },
+                  bgcolor: '#25D366',
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    bgcolor: '#128C7E'
+                  }
               }}
             >
               Testar no WhatsApp
@@ -517,13 +534,18 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
             <Button
               variant="outlined"
               onClick={handleCopyLink}
-              disabled={!generatedLink}
               startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
               aria-label="Copiar link"
               fullWidth
               sx={{ 
                 minWidth: { sm: 160 },
-                py: { xs: 1.5, sm: 1 }
+                  py: { xs: 1.5, sm: 1 },
+                  borderColor: '#FFFFFF',
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    borderColor: '#FFFFFF',
+                    bgcolor: 'rgba(255, 255, 255, 0.1)'
+                  }
               }}
             >
               {copySuccess ? 'Copiado!' : 'Copiar link'}
@@ -532,19 +554,27 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
             <Button
               variant="outlined"
               onClick={handleGenerateQRCode}
-              disabled={!generatedLink}
               startIcon={<QrCodeIcon />}
               aria-label="Gerar QR Code"
               fullWidth
               sx={{ 
                 minWidth: { sm: 160 },
-                py: { xs: 1.5, sm: 1 }
+                  py: { xs: 1.5, sm: 1 },
+                  borderColor: '#FFFFFF',
+                  color: '#FFFFFF',
+                  '&:hover': {
+                    borderColor: '#FFFFFF',
+                    bgcolor: 'rgba(255, 255, 255, 0.1)'
+                  }
               }}
             >
               QR Code
             </Button>
           </Stack>
+          </Paper>
+        )}
 
+        {/* Botão de limpar campos */}
           <Button
             variant="text"
             onClick={onReset}
@@ -552,17 +582,19 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
             aria-label="Limpar campos"
             sx={{ 
               alignSelf: 'center',
-              py: { xs: 1.5, sm: 1 }
+            py: { xs: 1.5, sm: 1 },
+            mt: 2
             }}
           >
             Limpar campos
           </Button>
-        </Paper>
       </Box>
 
-      <Paper elevation={3} sx={{ p: { xs: 2, sm: 3 } }}>
+      <Box sx={{ mt: 6 }}>
+        <QuickInstructions />
+      </Box>
+
         <InfoSections />
-      </Paper>
       
       <Popover
         open={Boolean(emojiAnchorEl)}
@@ -591,13 +623,6 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         onClose={() => setOpenSnackbar(false)}
         message={snackbarMessage || (copySuccess ? 'Link copiado com sucesso! 🔗' : '')}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
-
-      {/* Anúncio após o conteúdo principal */}
-      <AdUnit 
-        slot="5437524755"
-        format="auto"
-        style={{ marginTop: '2rem' }}
       />
     </Box>
   );

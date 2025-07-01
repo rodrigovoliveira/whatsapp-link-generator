@@ -19,25 +19,28 @@ const MessageTemplates: React.FC<MessageTemplatesProps> = ({ onSelectTemplate })
       height: '100%', 
       display: 'flex', 
       flexDirection: 'column',
-      maxHeight: isMobile ? '300px' : '400px', // Altura menor no mobile
-      bgcolor: 'background.paper',
+      maxHeight: isMobile ? '300px' : '350px',
+      bgcolor: 'background.default',
       borderRadius: theme.shape.borderRadius,
-      border: '1px solid',
-      borderColor: 'divider',
-      overflow: 'hidden', // Evita que a borda seja cortada pelo overflow
-      position: 'relative', // Adicionado para posicionamento do feedback
-      zIndex: 1 // Garante que o componente fique acima do campo de texto
+      overflow: 'hidden',
+      position: 'relative',
+      zIndex: 1,
+      mt: 3
     }}>
       <Box sx={{ 
         p: 2,
         borderBottom: '1px solid',
         borderColor: 'divider',
         bgcolor: 'background.default',
-        flexShrink: 0 // Impede que o cabeçalho encolha
+        flexShrink: 0
+      }}>
+        <Box sx={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 1
       }}>
         <Typography variant="h3" component="h3" sx={{ 
-          fontSize: isMobile ? '1.1rem' : '1.25rem',
-          mb: 1
+            fontSize: isMobile ? '1.1rem' : '1.25rem'
         }}>
           Exemplos de mensagens prontas
         </Typography>
@@ -46,6 +49,7 @@ const MessageTemplates: React.FC<MessageTemplatesProps> = ({ onSelectTemplate })
         }}>
           Escolha uma mensagem abaixo para preencher rapidamente o campo acima
         </Typography>
+        </Box>
       </Box>
 
       <List sx={{ 

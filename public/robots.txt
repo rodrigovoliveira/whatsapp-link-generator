@@ -5,6 +5,9 @@
 User-agent: *
 Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
+Allow: /politica-de-privacidade
+Allow: /termos-de-uso
+Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
 Allow: /logo512.png
@@ -19,6 +22,9 @@ Disallow: /*.css$
 User-agent: Googlebot
 Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
+Allow: /politica-de-privacidade
+Allow: /termos-de-uso
+Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
 Allow: /logo512.png
@@ -33,6 +39,9 @@ Disallow: /*.css$
 User-agent: Bingbot
 Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
+Allow: /politica-de-privacidade
+Allow: /termos-de-uso
+Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
 Allow: /logo512.png

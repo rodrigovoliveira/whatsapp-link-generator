@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset e estilos base */
 * {
   margin: 0;
@@ -186,4 +190,15 @@ code {
   .PhoneInput input {
     font-size: 16px !important;
   }
+}
+
+/* Esconde scrollbar para Chrome, Safari e Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Esconde scrollbar para IE, Edge e Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE e Edge */
+  scrollbar-width: none;  /* Firefox */
 }
