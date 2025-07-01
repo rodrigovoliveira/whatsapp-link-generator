@@ -121,7 +121,7 @@ const QuickInstructions: React.FC = () => {
   };
 
   return (
-    <Box sx={{ my: 4, width: '100%' }}>
+    <Box sx={{ width: '100%' }}>
       <Typography 
         variant="h5" 
         component="h2" 
@@ -133,7 +133,7 @@ const QuickInstructions: React.FC = () => {
           mb: 4
         }}
       >
-        Instruções rápidas
+        Como funciona?
       </Typography>
       
       {isMobile ? (

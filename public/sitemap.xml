@@ -7,7 +7,7 @@
   <!-- Página inicial (redirecionamento) -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/</loc>
-    <lastmod>2024-03-19</lastmod>
+    <lastmod>2024-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
   <!-- Página principal de geração de link -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-link-whatsapp</loc>
-    <lastmod>2024-03-20</lastmod>
+    <lastmod>2024-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -23,9 +23,33 @@
   <!-- Página de geração de QR Code -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-qr-code</loc>
-    <lastmod>2024-03-20</lastmod>
+    <lastmod>2024-03-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Política de Privacidade -->
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/politica-de-privacidade</loc>
+    <lastmod>2024-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Termos de Uso -->
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/termos-de-uso</loc>
+    <lastmod>2024-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- Recursos estáticos importantes -->
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/logo.webp</loc>
+    <lastmod>2024-03-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset> 

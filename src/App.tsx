@@ -3,11 +3,14 @@ import { Box, AppBar, Toolbar, Typography, Stack, Link as MuiLink } from '@mui/m
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
 import WhatsAppLinkGenerator from './components/WhatsAppLinkGenerator';
 import QRCodeGenerator from './components/QRCodeGenerator';
 import ThemeToggle from './components/ThemeToggle';
 import SEOHead from './components/SEOHead';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfUse from './components/TermsOfUse';
+import Footer from './components/Footer';
+import Breadcrumbs from './components/Breadcrumbs';
 
 const MenuButton = ({ to, icon, text, isSelected }: { to: string; icon: React.ReactNode; text: string; isSelected: boolean }) => (
   <Link 
@@ -55,88 +58,95 @@ function App() {
   };
 
   return (
-    <HelmetProvider>
-      <Box sx={{ flexGrow: 1 }}>
-        <MuiLink
-          href="#main-content"
-          className="skip-link"
-          sx={{
-            position: 'absolute',
-            top: '-40px',
-            left: 0,
-            backgroundColor: 'primary.main',
-            color: 'primary.contrastText',
-            padding: '8px 16px',
-            zIndex: 2000,
-            textDecoration: 'none',
-            '&:focus': {
-              top: 0,
-            },
-          }}
-        >
-          Pular para o conteúdo principal
-        </MuiLink>
+    <Box sx={{ 
+      display: 'flex',
+      flexDirection: 'column',
+      minHeight: '100vh'
+    }}>
+      <MuiLink
+        href="#main-content"
+        className="skip-link"
+        sx={{
+          position: 'absolute',
+          top: '-40px',
+          left: 0,
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          padding: '8px 16px',
+          zIndex: 2000,
+          textDecoration: 'none',
+          '&:focus': {
+            top: 0,
+          },
+        }}
+      >
+        Pular para o conteúdo principal
+      </MuiLink>
 
-        <AppBar 
-          position="fixed" 
-          sx={{ 
-            backgroundColor: 'primary.main',
-            color: 'primary.contrastText'
-          }}
-        >
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Link 
-                to="/" 
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          backgroundColor: 'primary.main',
+          color: 'primary.contrastText',
+          zIndex: 1200
+        }}
+      >
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Stack direction="row" spacing={2} alignItems="center">
+            <Link 
+              to="/" 
+              style={{ 
+                textDecoration: 'none', 
+                display: 'flex', 
+                alignItems: 'center' 
+              }}
+            >
+              <img 
+                src={`${process.env.PUBLIC_URL}/logo.png`}
+                alt="Gerar Link QR" 
                 style={{ 
-                  textDecoration: 'none', 
-                  display: 'flex', 
-                  alignItems: 'center' 
-                }}
-              >
-                <img 
-                  src={`${process.env.PUBLIC_URL}/logo.png`}
-                  alt="Gerar Link QR" 
-                  style={{ 
-                    height: '40px',
-                    width: 'auto',
-                    marginRight: '16px'
-                  }} 
-                />
-              </Link>
-              <Stack 
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 1, sm: 0 }}
-              >
-                <MenuButton 
-                  to="/gerar-link-whatsapp" 
-                  icon={<WhatsAppIcon />} 
-                  text="GERAR LINK WHATSAPP"
-                  isSelected={location.pathname === '/gerar-link-whatsapp'}
-                />
-                <MenuButton 
-                  to="/gerar-qr-code" 
-                  icon={<QrCodeIcon />} 
-                  text="GERAR QR CODE"
-                  isSelected={location.pathname === '/gerar-qr-code'}
-                />
-              </Stack>
+                  height: '40px',
+                  width: 'auto',
+                  marginRight: '16px'
+                }} 
+              />
+            </Link>
+            <Stack 
+              direction={{ xs: 'column', sm: 'row' }}
+              spacing={{ xs: 1, sm: 0 }}
+            >
+              <MenuButton 
+                to="/gerar-link-whatsapp" 
+                icon={<WhatsAppIcon />} 
+                text="GERAR LINK WHATSAPP"
+                isSelected={location.pathname === '/gerar-link-whatsapp'}
+              />
+              <MenuButton 
+                to="/gerar-qr-code" 
+                icon={<QrCodeIcon />} 
+                text="GERAR QR CODE"
+                isSelected={location.pathname === '/gerar-qr-code'}
+              />
             </Stack>
-            <ThemeToggle />
-          </Toolbar>
-        </AppBar>
+          </Stack>
+          <ThemeToggle />
+        </Toolbar>
+      </AppBar>
 
-        <Box 
-          component="main"
-          id="main-content"
-          tabIndex={-1}
-          sx={{ 
-            mt: { xs: 10, sm: 8 }, 
-            p: { xs: 2, sm: 3 },
-            minHeight: 'calc(100vh - 64px)',
-            outline: 'none'
-          }}
-        >
+      <Box
+        component="main"
+        id="main-content"
+        tabIndex={-1}
+        sx={{
+          mt: { xs: '56px', sm: '64px' },
+          flexGrow: 1,
+          outline: 'none',
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
+        <Breadcrumbs />
+        <Box sx={{ px: { xs: 2, sm: 3 } }}>
           <Routes>
             <Route path="/" element={<Navigate to="/gerar-link-whatsapp" replace />} />
             <Route 
@@ -166,10 +176,19 @@ function App() {
                 </>
               } 
             />
+            <Route 
+              path="/politica-de-privacidade" 
+              element={<PrivacyPolicy />} 
+            />
+            <Route 
+              path="/termos-de-uso" 
+              element={<TermsOfUse />} 
+            />
           </Routes>
         </Box>
       </Box>
-    </HelmetProvider>
+      <Footer />
+    </Box>
   );
 }
 
