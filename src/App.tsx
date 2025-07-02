@@ -11,6 +11,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfUse from './components/TermsOfUse';
 import Footer from './components/Footer';
 import Breadcrumbs from './components/Breadcrumbs';
+import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
 
 const MenuButton = ({ to, icon, text, isSelected }: { to: string; icon: React.ReactNode; text: string; isSelected: boolean }) => (
   <Link 
@@ -183,6 +185,14 @@ function App() {
             <Route 
               path="/termos-de-uso" 
               element={<TermsOfUse />} 
+            />
+            <Route 
+              path="/blog" 
+              element={<Blog />} 
+            />
+            <Route 
+              path="/blog/:slug" 
+              element={<BlogPost />} 
             />
           </Routes>
         </Box>

@@ -1,25 +1,37 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ArticleIcon from '@mui/icons-material/Article';
+import QrCodeIcon from '@mui/icons-material/QrCode';
+import SecurityIcon from '@mui/icons-material/Security';
+import GavelIcon from '@mui/icons-material/Gavel';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import BookIcon from '@mui/icons-material/Book';
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
   const { mode } = useTheme();
   const isDarkMode = mode === 'dark';
 
-  const getPathName = (path: string): string => {
+  const getPathInfo = (path: string): { name: string; icon: React.ReactNode } => {
     switch (path) {
       case 'gerar-link-whatsapp':
-        return 'Gerar Link';
+        return { name: 'Gerar Link', icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} /> };
       case 'gerar-qr-code':
-        return 'Gerar QR Code';
+        return { name: 'Gerar QR Code', icon: <QrCodeIcon sx={{ fontSize: '1rem' }} /> };
       case 'politica-de-privacidade':
-        return 'Política de Privacidade';
+        return { name: 'Política de Privacidade', icon: <SecurityIcon sx={{ fontSize: '1rem' }} /> };
       case 'termos-de-uso':
-        return 'Termos de Uso';
+        return { name: 'Termos de Uso', icon: <GavelIcon sx={{ fontSize: '1rem' }} /> };
+      case 'blog':
+        return { name: 'Blog', icon: <BookIcon sx={{ fontSize: '1rem' }} /> };
+      case 'whatsapp-web-para-pequenas-empresas':
+        return { name: 'WhatsApp Web para Empresas', icon: <ArticleIcon sx={{ fontSize: '1rem' }} /> };
       default:
-        return path;
+        return { name: path, icon: <ArticleIcon sx={{ fontSize: '1rem' }} /> };
     }
   };
 
@@ -35,38 +47,119 @@ const Breadcrumbs: React.FC = () => {
         width: '100%',
         backgroundColor: theme => theme.palette.background.default,
         borderBottom: theme => `1px solid ${theme.palette.divider}`,
-        mb: 2
+        mb: 2,
+        py: { xs: 1.5, sm: 2 },
+        px: { xs: 2, sm: 3 },
       }}
     >
-      <ol className="flex items-center whitespace-nowrap overflow-x-auto no-scrollbar py-2 px-4">
-        <li className="flex items-center min-w-fit">
+      <Box 
+        component="ol" 
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          overflowX: 'auto',
+          scrollbarWidth: 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none'
+          },
+          '-ms-overflow-style': 'none'
+        }}
+      >
+        <Box component="li" sx={{ display: 'flex', alignItems: 'center', minWidth: 'fit-content' }}>
           <Link 
             to="/"
-            className={`text-xs ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'} transition-colors duration-200`}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
+              color: isDarkMode ? '#9CA3AF' : '#6B7280',
+              transition: 'all 0.2s ease-in-out',
+            }}
+            className="hover-effect"
           >
-            Início
+            <HomeIcon sx={{ 
+              fontSize: '1.1rem',
+              mr: 0.5,
+              opacity: 0.9,
+            }} />
+            <Typography 
+              variant="body2" 
+              sx={{ 
+                fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                fontWeight: 500,
+              }}
+            >
+              Início
+            </Typography>
           </Link>
-        </li>
-        {paths.map((path, index) => (
-          <React.Fragment key={path}>
-            <li className="flex items-center min-w-fit">
-              <span className="mx-1 text-xs opacity-50">/</span>
-              {index === paths.length - 1 ? (
-                <span className={`text-xs ${isDarkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-                  {getPathName(path)}
-                </span>
-              ) : (
-                <Link 
-                  to={`/${paths.slice(0, index + 1).join('/')}`}
-                  className={`text-xs ${isDarkMode ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'} transition-colors duration-200`}
-                >
-                  {getPathName(path)}
-                </Link>
-              )}
-            </li>
-          </React.Fragment>
-        ))}
-      </ol>
+        </Box>
+
+        {paths.map((path, index) => {
+          const { name, icon } = getPathInfo(path);
+          const isLast = index === paths.length - 1;
+
+          return (
+            <React.Fragment key={path}>
+              <ChevronRightIcon 
+                sx={{ 
+                  mx: 1,
+                  fontSize: '1.1rem',
+                  color: isDarkMode ? '#4B5563' : '#9CA3AF',
+                  opacity: 0.8,
+                }} 
+              />
+              <Box component="li" sx={{ display: 'flex', alignItems: 'center', minWidth: 'fit-content' }}>
+                {isLast ? (
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: isDarkMode ? '#E5E7EB' : '#374151',
+                    }}
+                  >
+                    {icon}
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        ml: 0.5,
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        fontWeight: 600,
+                      }}
+                    >
+                      {name}
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Link 
+                    to={`/${paths.slice(0, index + 1).join('/')}`}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      textDecoration: 'none',
+                      color: isDarkMode ? '#9CA3AF' : '#6B7280',
+                      transition: 'all 0.2s ease-in-out',
+                    }}
+                    className="hover-effect"
+                  >
+                    {icon}
+                    <Typography 
+                      variant="body2" 
+                      sx={{ 
+                        ml: 0.5,
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        fontWeight: 500,
+                      }}
+                    >
+                      {name}
+                    </Typography>
+                  </Link>
+                )}
+              </Box>
+            </React.Fragment>
+          );
+        })}
+      </Box>
     </Box>
   );
 };
