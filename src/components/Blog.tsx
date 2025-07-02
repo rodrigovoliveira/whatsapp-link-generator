@@ -10,43 +10,35 @@ const Blog: React.FC = () => {
 
   const posts = [
     {
-      slug: 'como-criar-link-whatsapp-mensagem-personalizada',
-      title: 'Como Criar um Link para WhatsApp com Mensagem Personalizada',
-      description: 'Descubra o passo a passo para criar um link direto com texto pronto para iniciar conversas no WhatsApp. Ideal para pequenas empresas, lojas e atendimento automatizado.',
-      date: '2024-03-26',
-      readTime: '5 min',
-      image: '/logo.webp'
-    },
-    {
-      slug: 'o-que-e-qr-code-como-criar-whatsapp',
-      title: 'O que é um QR Code e como criar um para seu WhatsApp',
-      description: 'Aprenda como funciona o QR Code e como gerar um para seu número do WhatsApp, permitindo que clientes escaneiem e iniciem conversas de forma prática.',
-      date: '2024-03-25',
+      slug: 'whatsapp-web-pequena-empresa',
+      title: 'WhatsApp Web: O que é e Como Pode Ajudar Sua Pequena Empresa',
+      description: 'Descubra como o WhatsApp Web pode ajudar sua pequena empresa a atender clientes de forma mais ágil e profissional usando o computador.',
+      date: '2024-03-29',
       readTime: '6 min',
       image: '/logo.webp'
     },
     {
-      slug: 'whatsapp-web-para-pequenas-empresas',
-      title: 'WhatsApp Web para Pequenos Negócios: Como Usar e Vantagens',
-      description: 'Entenda como utilizar o WhatsApp Web para melhorar seu atendimento, especialmente para micro e pequenas empresas.',
-      date: '2024-03-24',
-      readTime: '8 min',
-      image: '/logo.webp'
-    },
-    {
-      slug: 'como-adicionar-link-whatsapp-instagram-site',
-      title: 'Como Adicionar o Link do WhatsApp em seu Instagram e Site',
-      description: 'Veja como divulgar seu link do WhatsApp em perfis de redes sociais, como Instagram e Facebook, além de sites e páginas de vendas.',
-      date: '2024-03-23',
+      slug: 'whatsapp-business-recursos-vantagens',
+      title: 'WhatsApp Business: Recursos e Vantagens para Pequenos Negócios',
+      description: 'Descubra como o WhatsApp Business pode ajudar seu pequeno negócio com recursos especiais para empresas.',
+      date: '2024-03-28',
       readTime: '5 min',
       image: '/logo.webp'
     },
     {
-      slug: 'link-whatsapp-vendas-mensagens-prontas',
-      title: 'Link do WhatsApp para Vendas: 5 Mensagens Prontas para Usar com Clientes',
-      description: 'Sugestões de mensagens de vendas que você pode colocar no seu link do WhatsApp. Personalize cada uma e envie rapidamente ao cliente.',
-      date: '2024-03-22',
+      slug: 'como-criar-link-whatsapp',
+      title: 'Como Criar um Link do WhatsApp para seu Negócio',
+      description: 'Aprenda a criar links personalizados do WhatsApp para seu negócio e facilite o contato com seus clientes.',
+      date: '2024-03-27',
       readTime: '7 min',
+      image: '/logo.webp'
+    },
+    {
+      slug: 'dicas-melhorar-atendimento-whatsapp',
+      title: '5 Dicas para Melhorar o Atendimento pelo WhatsApp na Sua Empresa',
+      description: 'Descubra como melhorar o atendimento da sua empresa pelo WhatsApp com 5 dicas práticas e fáceis de implementar.',
+      date: '2024-03-26',
+      readTime: '6 min',
       image: '/logo.webp'
     }
   ];
