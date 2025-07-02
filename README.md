@@ -43,6 +43,8 @@ Gerador de links do WhatsApp com mensagem pronta e QR Code. Crie links personali
 - ✅ Integração com Google AdSense
 - ✅ Analytics avançado com GA4
 - ✅ Rastreamento de eventos principais
+- ✅ Google Tag Manager implementado
+- ✅ AMP Auto Ads configurado
 - 🔄 Otimização de posicionamento de anúncios
 - 🔄 Análise de receita por usuário
 - 🔄 Estratégias de monetização alternativas
@@ -64,6 +66,8 @@ Gerador de links do WhatsApp com mensagem pronta e QR Code. Crie links personali
 - ✅ Instruções rápidas com carrossel responsivo
 - ✅ Integração com Google AdSense
 - ✅ Analytics avançado com GA4
+- ✅ Gerenciamento de tags via GTM
+- ✅ Anúncios automáticos com AMP
 
 ## 🔒 Segurança e Validação
 
@@ -117,6 +121,8 @@ Gerador de links do WhatsApp com mensagem pronta e QR Code. Crie links personali
 - React Avatar Editor
 - Google Analytics 4
 - Google AdSense
+- Google Tag Manager
+- AMP Auto Ads
 
 ## 📦 Instalação
 
@@ -165,17 +171,24 @@ npm start
 
 ## 📊 Monitoramento
 
-### Google Analytics
+### Google Tag Manager (GTM-NF649R56)
+- Gerenciamento centralizado de tags
+- Implementação simplificada de scripts
+- Controle de versão de tags
+- Disparo condicional de eventos
+
+### Google Analytics (G-9X9BYPNZKZ)
 - Eventos personalizados para cada interação
 - Rastreamento de conversões
 - Métricas de engajamento
 - Relatórios em tempo real
 
-### Google AdSense
+### Google AdSense (ca-pub-6626399903538096)
 - Anúncios responsivos
 - Posicionamento estratégico
 - Otimização automática
 - Monitoramento de performance
+- AMP Auto Ads para posicionamento inteligente
 
 ## 📝 Licença
 
@@ -184,7 +197,6 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 ## 📬 Contato
 
 Para sugestões, dúvidas ou contribuições, por favor abra uma issue no repositório.
-
 
 ## 📊 Métricas de Sucesso
 - Aumento no tempo médio de permanência

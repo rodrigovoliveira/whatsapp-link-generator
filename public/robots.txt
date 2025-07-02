@@ -7,6 +7,8 @@ Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
 Allow: /politica-de-privacidade
 Allow: /termos-de-uso
+Allow: /blog
+Allow: /blog/*
 Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
@@ -24,6 +26,8 @@ Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
 Allow: /politica-de-privacidade
 Allow: /termos-de-uso
+Allow: /blog
+Allow: /blog/*
 Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
@@ -41,6 +45,8 @@ Allow: /gerar-link-whatsapp
 Allow: /gerar-qr-code
 Allow: /politica-de-privacidade
 Allow: /termos-de-uso
+Allow: /blog
+Allow: /blog/*
 Allow: /logo.webp
 Allow: /logo.png
 Allow: /logo192.png
