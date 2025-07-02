@@ -1,41 +1,16 @@
 import React, { useState } from 'react';
-import { Box, AppBar, Toolbar, Typography, Stack, Link as MuiLink } from '@mui/material';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import QrCodeIcon from '@mui/icons-material/QrCode';
-import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { Box, Link as MuiLink } from '@mui/material';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import WhatsAppLinkGenerator from './components/WhatsAppLinkGenerator';
 import QRCodeGenerator from './components/QRCodeGenerator';
-import ThemeToggle from './components/ThemeToggle';
 import SEOHead from './components/SEOHead';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfUse from './components/TermsOfUse';
 import Footer from './components/Footer';
 import Breadcrumbs from './components/Breadcrumbs';
-
-const MenuButton = ({ to, icon, text, isSelected }: { to: string; icon: React.ReactNode; text: string; isSelected: boolean }) => (
-  <Link 
-    to={to} 
-    style={{ 
-      textDecoration: 'none',
-      color: 'inherit',
-      opacity: isSelected ? 1 : 0.7,
-      transition: 'opacity 0.2s',
-    }}
-  >
-    <Stack 
-      direction="row" 
-      spacing={1} 
-      alignItems="center"
-      sx={{
-        padding: '12px 16px',
-        borderBottom: isSelected ? '2px solid currentColor' : '2px solid transparent',
-      }}
-    >
-      {icon}
-      <Typography variant="subtitle1">{text}</Typography>
-    </Stack>
-  </Link>
-);
+import Blog from './components/Blog';
+import BlogPost from './components/BlogPost';
+import MainMenu from './components/MainMenu';
 
 function App() {
   const [generatedLink, setGeneratedLink] = useState('');
@@ -83,55 +58,7 @@ function App() {
         Pular para o conteúdo principal
       </MuiLink>
 
-      <AppBar 
-        position="fixed" 
-        sx={{ 
-          backgroundColor: 'primary.main',
-          color: 'primary.contrastText',
-          zIndex: 1200
-        }}
-      >
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Stack direction="row" spacing={2} alignItems="center">
-            <Link 
-              to="/" 
-              style={{ 
-                textDecoration: 'none', 
-                display: 'flex', 
-                alignItems: 'center' 
-              }}
-            >
-              <img 
-                src={`${process.env.PUBLIC_URL}/logo.png`}
-                alt="Gerar Link QR" 
-                style={{ 
-                  height: '40px',
-                  width: 'auto',
-                  marginRight: '16px'
-                }} 
-              />
-            </Link>
-            <Stack 
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={{ xs: 1, sm: 0 }}
-            >
-              <MenuButton 
-                to="/gerar-link-whatsapp" 
-                icon={<WhatsAppIcon />} 
-                text="GERAR LINK WHATSAPP"
-                isSelected={location.pathname === '/gerar-link-whatsapp'}
-              />
-              <MenuButton 
-                to="/gerar-qr-code" 
-                icon={<QrCodeIcon />} 
-                text="GERAR QR CODE"
-                isSelected={location.pathname === '/gerar-qr-code'}
-              />
-            </Stack>
-          </Stack>
-          <ThemeToggle />
-        </Toolbar>
-      </AppBar>
+      <MainMenu />
 
       <Box
         component="main"
@@ -153,7 +80,10 @@ function App() {
               path="/gerar-link-whatsapp" 
               element={
                 <>
-                  <SEOHead page="link" />
+                  <SEOHead 
+                    page="link"
+                    canonical="https://www.gerarlinkzap.com.br/gerar-link-whatsapp"
+                  />
                   <WhatsAppLinkGenerator 
                     onLinkGenerated={setGeneratedLink}
                     phone={phone}
@@ -169,7 +99,10 @@ function App() {
               path="/gerar-qr-code" 
               element={
                 <>
-                  <SEOHead page="qr" />
+                  <SEOHead 
+                    page="qr"
+                    canonical="https://www.gerarlinkzap.com.br/gerar-qr-code"
+                  />
                   <QRCodeGenerator 
                     whatsappLink={generatedLink}
                   />
@@ -183,6 +116,14 @@ function App() {
             <Route 
               path="/termos-de-uso" 
               element={<TermsOfUse />} 
+            />
+            <Route 
+              path="/blog" 
+              element={<Blog />} 
+            />
+            <Route 
+              path="/blog/:slug" 
+              element={<BlogPost />} 
             />
           </Routes>
         </Box>

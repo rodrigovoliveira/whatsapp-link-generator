@@ -4,34 +4,71 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Página inicial (redirecionamento) -->
+  <!-- Página inicial -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/</loc>
-    <lastmod>2024-03-21</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Página principal de geração de link -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-link-whatsapp</loc>
-    <lastmod>2024-03-21</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2024-03-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Página de geração de QR Code -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/gerar-qr-code</loc>
-    <lastmod>2024-03-21</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2024-03-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Página do blog -->
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/blog</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Posts do blog em ordem cronológica -->
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/blog/whatsapp-web-pequena-empresa</loc>
+    <lastmod>2024-03-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/blog/whatsapp-business-recursos-vantagens</loc>
+    <lastmod>2024-03-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/blog/como-criar-link-whatsapp</loc>
+    <lastmod>2024-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.gerarlinkzap.com.br/blog/dicas-melhorar-atendimento-whatsapp</loc>
+    <lastmod>2024-03-26</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Política de Privacidade -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/politica-de-privacidade</loc>
-    <lastmod>2024-03-21</lastmod>
+    <lastmod>2024-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -39,7 +76,7 @@
   <!-- Termos de Uso -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/termos-de-uso</loc>
-    <lastmod>2024-03-21</lastmod>
+    <lastmod>2024-03-29</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -47,7 +84,7 @@
   <!-- Recursos estáticos importantes -->
   <url>
     <loc>https://www.gerarlinkzap.com.br/logo.webp</loc>
-    <lastmod>2024-03-21</lastmod>
+    <lastmod>2024-03-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>

@@ -155,29 +155,36 @@ const organizationSchema: OrganizationSchema = {
 };
 
 interface SEOHeadProps {
-  page?: 'link' | 'qr';
+  page?: 'link' | 'qr' | 'blog';
   title?: string;
   description?: string;
   schema?: SchemaOrg;
+  canonical?: string;
 }
 
-const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description: customDescription, schema }) => {
+const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description: customDescription, schema, canonical }) => {
   const location = useLocation();
   const baseUrl = 'https://www.gerarlinkzap.com.br';
   const currentUrl = `${baseUrl}${location.pathname}`;
 
-  const titles = {
-    link: 'Gerar Link WhatsApp Grátis | Crie Links Personalizados para WhatsApp',
-    qr: 'Gerar QR Code WhatsApp Grátis | Crie QR Codes Personalizados'
-  };
+  // Default values
+  const defaultTitle = 'Gerador de Link WhatsApp - Crie Links e QR Codes para WhatsApp';
+  const defaultDescription = 'Crie links personalizados e QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar links com mensagens prontas para WhatsApp.';
 
-  const descriptions = {
-    link: 'Crie links personalizados do WhatsApp com mensagem automática. Ferramenta gratuita para gerar links do WhatsApp Business. Sem cadastro, rápido e prático.',
-    qr: 'Gere QR Codes profissionais para WhatsApp gratuitamente. Personalize com sua logo e cores. Ideal para materiais impressos e marketing.'
-  };
+  // Page specific values
+  const pageTitle = page === 'link' ? 'Gerar Link WhatsApp - Crie Links com Mensagem Pronta' :
+                   page === 'qr' ? 'Gerar QR Code WhatsApp - Crie QR Codes para WhatsApp' :
+                   page === 'blog' ? 'Blog - Gerador de Link WhatsApp' :
+                   defaultTitle;
 
-  const title = customTitle || (page ? titles[page] : '');
-  const description = customDescription || (page ? descriptions[page] : '');
+  const pageDescription = page === 'link' ? 'Crie links personalizados para WhatsApp com mensagens prontas. Ferramenta gratuita para gerar links do WhatsApp.' :
+                         page === 'qr' ? 'Crie QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar QR Codes com mensagens prontas.' :
+                         page === 'blog' ? 'Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes.' :
+                         defaultDescription;
+
+  // Use custom values if provided, otherwise use page specific or default values
+  const title = customTitle || pageTitle;
+  const description = customDescription || pageDescription;
 
   // Gera o breadcrumb baseado na URL atual
   const getBreadcrumbSchema = (): BreadcrumbSchema => {
@@ -235,7 +242,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description
       <meta name="robots" content="index, follow" />
       
       {/* Canonical URL */}
-      <link rel="canonical" href={currentUrl} />
+      {canonical && <link rel="canonical" href={canonical} />}
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content="website" />

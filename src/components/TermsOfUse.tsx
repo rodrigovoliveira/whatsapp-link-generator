@@ -8,6 +8,7 @@ const TermsOfUse: React.FC = () => {
       <SEOHead
         title="Termos de Uso - Gerador de Link WhatsApp"
         description="Termos de uso do Gerador de Link WhatsApp. Entenda as regras e condições de uso da nossa ferramenta gratuita."
+        canonical="https://www.gerarlinkzap.com.br/termos-de-uso"
       />
       <Container maxWidth="md">
         <Box sx={{ py: 4 }}>
