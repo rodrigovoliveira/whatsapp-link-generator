@@ -36,6 +36,14 @@ const Footer: React.FC = () => {
         }}>
           <MuiLink
             component={Link}
+            to="/blog"
+            color="inherit"
+            underline="hover"
+          >
+            Blog
+          </MuiLink>
+          <MuiLink
+            component={Link}
             to="/termos-de-uso"
             color="inherit"
             underline="hover"
