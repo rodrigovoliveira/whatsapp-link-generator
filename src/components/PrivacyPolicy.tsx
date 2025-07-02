@@ -8,6 +8,7 @@ const PrivacyPolicy: React.FC = () => {
       <SEOHead
         title="Política de Privacidade - Gerador de Link WhatsApp"
         description="Política de privacidade do Gerador de Link WhatsApp. Saiba como suas informações são protegidas ao usar nossa ferramenta gratuita."
+        canonical="https://www.gerarlinkzap.com.br/politica-de-privacidade"
       />
       <Container maxWidth="md">
         <Box sx={{ py: 4 }}>

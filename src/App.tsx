@@ -80,7 +80,10 @@ function App() {
               path="/gerar-link-whatsapp" 
               element={
                 <>
-                  <SEOHead page="link" />
+                  <SEOHead 
+                    page="link"
+                    canonical="https://www.gerarlinkzap.com.br/gerar-link-whatsapp"
+                  />
                   <WhatsAppLinkGenerator 
                     onLinkGenerated={setGeneratedLink}
                     phone={phone}
@@ -96,7 +99,10 @@ function App() {
               path="/gerar-qr-code" 
               element={
                 <>
-                  <SEOHead page="qr" />
+                  <SEOHead 
+                    page="qr"
+                    canonical="https://www.gerarlinkzap.com.br/gerar-qr-code"
+                  />
                   <QRCodeGenerator 
                     whatsappLink={generatedLink}
                   />

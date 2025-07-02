@@ -48,6 +48,7 @@ const Blog: React.FC = () => {
       <SEOHead
         title="Blog - Gerador de Link WhatsApp"
         description="Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes."
+        canonical="https://www.gerarlinkzap.com.br/blog"
       />
       <Container maxWidth="lg">
         <Box sx={{ py: 4 }}>
