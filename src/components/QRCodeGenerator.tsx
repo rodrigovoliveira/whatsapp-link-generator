@@ -12,6 +12,7 @@ import ImageCropModal from './ImageCropModal';
 import { validateImageFile } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
 import InfoSections from './InfoSections';
+import { useTranslation } from 'react-i18next';
 
 interface QRCodeGeneratorProps {
   whatsappLink: string;
@@ -35,6 +36,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const qrCodeRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Carregar do cache ao montar
   useEffect(() => {
@@ -242,11 +244,11 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
                 mt: { xs: 1, sm: 0 }
               }}
             >
-              Crie seu QR Code para WhatsApp Grátis
+              {t('Crie seu QR Code para WhatsApp Grátis')}
             </Typography>
             
             <Typography variant="body1" sx={{ mb: 3, color: 'text.secondary', textAlign: 'center' }}>
-              Gere o QR Code do seu link com mensagem personalizada. Sem login e sem custo – basta colar o link e baixar o QR em segundos.
+              {t('Gere o QR Code do seu link com mensagem personalizada. Sem login e sem custo – basta colar o link e baixar o QR em segundos.')}
             </Typography>
           </Box>
 
@@ -256,11 +258,10 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
               <Box>
                 <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <WhatsAppIcon sx={{ color: '#25D366' }} />
-                  Link do WhatsApp gerado com a mensagem
+                  {t('Link do WhatsApp gerado com a mensagem')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  Este é o link personalizado que será codificado no QR Code abaixo.
-                  Você pode copiá-lo ou testar direto no WhatsApp Web.
+                  {t('Este é o link personalizado que será codificado no QR Code abaixo. Você pode copiá-lo ou testar direto no WhatsApp Web.')}
                 </Typography>
                 <Alert 
                   severity="info" 
@@ -294,7 +295,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
                   fontSize: '1.1rem',
                 }}
               >
-                Editar link ou mensagem
+                {t('Editar link ou mensagem')}
               </Button>
 
               {/* QR Code */}
@@ -337,7 +338,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
                     fontSize: '1.1rem',
                   }}
                 >
-                  Baixar QR Code (PNG)
+                  {t('Baixar QR Code (PNG)')}
                 </Button>
 
                 <Button
@@ -356,7 +357,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
                     fontSize: '1.1rem',
                   }}
                 >
-                  {logoImage ? 'Alterar logomarca no centro do QR Code' : 'Adicionar logomarca no centro do QR Code (opcional)'}
+                  {logoImage ? t('Alterar logomarca no centro do QR Code') : t('Adicionar logomarca no centro do QR Code (opcional)')}
                 </Button>
               </Stack>
             </>
@@ -399,14 +400,14 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ whatsappLink }) => {
           {/* Instruções de Uso */}
           <Box sx={{ mt: 4 }}>
             <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>
-              Instruções rápidas:
+              {t('Instruções rápidas:')}
             </Typography>
 
             <Stack spacing={2} sx={{ mb: 4 }}>
-              <Typography variant="body1">1. Cole o link do WhatsApp com mensagem</Typography>
-              <Typography variant="body1">2. Clique em "Gerar QR Code"</Typography>
-              <Typography variant="body1">3. Visualize o código</Typography>
-              <Typography variant="body1">4. Clique em "Baixar PNG"</Typography>
+              <Typography variant="body1">1. {t('Cole o link do WhatsApp com mensagem')}</Typography>
+              <Typography variant="body1">2. {t('Clique em "Gerar QR Code"')}</Typography>
+              <Typography variant="body1">3. {t('Visualize o código')}</Typography>
+              <Typography variant="body1">4. {t('Clique em "Baixar PNG"')}</Typography>
             </Stack>
 
             <Typography variant="h2" sx={{ mb: 3, fontSize: '1.5rem' }}>

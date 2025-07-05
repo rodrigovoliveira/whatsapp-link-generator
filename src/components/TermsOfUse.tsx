@@ -1,13 +1,16 @@
 import React from 'react';
 import { Box, Container, Typography, Paper } from '@mui/material';
 import SEOHead from './SEOHead';
+import { useTranslation } from 'react-i18next';
 
 const TermsOfUse: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <SEOHead
-        title="Termos de Uso - Gerador de Link WhatsApp"
-        description="Termos de uso do Gerador de Link WhatsApp. Entenda as regras e condições de uso da nossa ferramenta gratuita."
+        title={t('Termos de Uso - Gerador de Link WhatsApp')}
+        description={t('Termos de uso do Gerador de Link WhatsApp. Entenda as regras e condições de uso da nossa ferramenta gratuita.')}
         canonical="https://www.gerarlinkzap.com.br/termos-de-uso"
       />
       <Container maxWidth="md">

@@ -3,9 +3,11 @@ import { Box, Container, Typography, Paper, Grid, Link as MuiLink } from '@mui/m
 import { Link } from 'react-router-dom';
 import SEOHead from './SEOHead';
 import { useTheme } from '../contexts/ThemeContext';
+import { useTranslation } from 'react-i18next';
 
 const Blog: React.FC = () => {
   const { mode } = useTheme();
+  const { t } = useTranslation();
   const isDarkMode = mode === 'dark';
 
   const posts = [
@@ -46,8 +48,8 @@ const Blog: React.FC = () => {
   return (
     <>
       <SEOHead
-        title="Blog - Gerador de Link WhatsApp"
-        description="Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes."
+        title={t('Blog - Gerador de Link WhatsApp')}
+        description={t('Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes.')}
         canonical="https://www.gerarlinkzap.com.br/blog"
       />
       <Container maxWidth="lg">

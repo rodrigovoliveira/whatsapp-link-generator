@@ -22,6 +22,7 @@ import InfoSections from './InfoSections';
 import { validatePhone, validateMessage, sanitizeInput } from '../utils/validation';
 import { analytics } from '../services/analyticsService';
 import QuickInstructions from './QuickInstructions';
+import { useTranslation } from 'react-i18next';
 
 // Lazy load do Emoji Picker
 const Picker = lazy(() => import('@emoji-mart/react'));
@@ -102,6 +103,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
   const [showAddPhoneMsg, setShowAddPhoneMsg] = useState(false);
   const linkAreaRef = useRef<HTMLDivElement>(null);
   const [showFormatInfo, setShowFormatInfo] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const generatedLink = useMemo(() => {
     // Validar telefone
@@ -318,22 +320,36 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
 
   return (
     <Box sx={{ width: '100%', p: { xs: 2, sm: 3 }, position: 'relative' }}>
+      {/* Seletor de idioma */}
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <label htmlFor="lang-select" style={{ marginRight: 8 }}>{t('Idioma')}:</label>
+        <select
+          id="lang-select"
+          value={i18n.language}
+          onChange={e => i18n.changeLanguage(e.target.value)}
+          style={{ padding: '4px 8px', borderRadius: 4 }}
+        >
+          <option value="pt">{t('Português')}</option>
+          <option value="en">{t('Inglês')}</option>
+        </select>
+      </Box>
+
       {/* Tutorial passo a passo */}
       {showTutorial && (
         <Paper elevation={3} sx={{ mb: 3, p: 2, bgcolor: 'primary.light', color: 'primary.contrastText', textAlign: 'center' }}>
-          <Typography variant="h6" sx={{ mb: 1 }}>Como gerar seu link do WhatsApp:</Typography>
+          <Typography variant="h6" sx={{ mb: 1 }}>{t('Como gerar seu link do WhatsApp:')}</Typography>
           <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ flexWrap: 'wrap' }}>
             <Box>
               <Typography variant="body2" sx={{ fontWeight: 'bold' }}>1</Typography>
-              <Typography variant="body2">Digite seu número</Typography>
+              <Typography variant="body2">{t('Digite seu número')}</Typography>
             </Box>
             <Box>
               <Typography variant="body2" sx={{ fontWeight: 'bold' }}>2</Typography>
-              <Typography variant="body2">(Opcional) Escreva uma mensagem</Typography>
+              <Typography variant="body2">{t('(Opcional) Escreva uma mensagem')}</Typography>
             </Box>
             <Box>
               <Typography variant="body2" sx={{ fontWeight: 'bold' }}>3</Typography>
-              <Typography variant="body2">Toque em <b>Gerar Link</b></Typography>
+              <Typography variant="body2" dangerouslySetInnerHTML={{ __html: t('Toque em <b>Gerar Link</b>') }} />
             </Box>
           </Stack>
         </Paper>
@@ -348,7 +364,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
           color: 'primary.main'
         }}
       >
-        Crie seu Link WhatsApp
+        {t('Crie seu Link WhatsApp')}
       </Typography>
 
       <Typography 
@@ -359,7 +375,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
           color: 'text.secondary'
         }}
       >
-        Cole seu número e gere seu link do WhatsApp em segundos!
+        {t('Cole seu número e gere seu link do WhatsApp em segundos!')}
       </Typography>
 
       <Box sx={{ maxWidth: '600px', mx: 'auto', position: 'relative' }}>
@@ -376,7 +392,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         >
           <Box>
             <Typography variant="h6" component="h6" sx={{ color: 'text.primary', mb: 2 }}>
-              Número do WhatsApp
+              {t('Número de telefone')}
             </Typography>
             <PhoneInput
               international
@@ -386,7 +402,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               disabled={isLoadingCountry}
               error={phoneError}
               aria-label="Número do WhatsApp"
-              placeholder="Ex: 11999999999"
+              placeholder={t('Ex: 11999999999')}
               sx={{
                 '& .PhoneInputInput': {
                   width: '100%',
@@ -406,12 +422,12 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
             />
             {showAddPhoneMsg && (
               <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                Digite o número do WhatsApp com DDD. Ex: 11999999999
+                {t('Campo obrigatório')}
               </Typography>
             )}
             {!showAddPhoneMsg && phoneError && (
               <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                {phoneError === 'Número inválido' ? 'Digite um número válido com DDD. Ex: 11999999999' : phoneError}
+                {t(phoneError)}
               </Typography>
             )}
           </Box>
@@ -424,7 +440,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               mb: 1
             }}>
               <Typography variant="h6" component="h6" sx={{ color: 'text.primary' }}>
-                Mensagem (opcional)
+                {t('Mensagem (opcional)')}
               </Typography>
               <Button
                 variant="text"
@@ -439,7 +455,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   }
                 }}
               >
-                Ver mensagens prontas ↓
+                {t('Ver mensagens prontas ↓')}
               </Button>
             </Box>
 
@@ -532,9 +548,9 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               fullWidth
               value={message}
               onChange={(e) => handleMessageChange(e.target.value)}
-              placeholder="Ex: Olá! Gostaria de mais informações."
+              placeholder={t('Digite sua mensagem')}
               error={!!messageError}
-              helperText={messageError && messageError === 'Mensagem muito curta' ? 'Digite uma mensagem maior ou deixe em branco.' : messageError}
+              helperText={messageError ? t(messageError) : ''}
               aria-label="Mensagem"
               sx={{
                 '& .MuiInputBase-input': {
@@ -589,9 +605,9 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               letterSpacing: 1,
             }}
             onClick={handleGenerateLinkBtn}
-            aria-label="Gerar Link do WhatsApp"
+            aria-label={t('Gerar Link')}
           >
-            Gerar Link do WhatsApp
+            {t('Gerar Link')}
           </Button>
         </Box>
 
@@ -617,7 +633,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   fontWeight: 'bold'
                 }}
               >
-                {generatedLink ? 'Link gerado com sucesso:' : 'Preencha corretamente para gerar o link'}
+                {generatedLink ? t('Link gerado com sucesso:') : t('Preencha corretamente para gerar o link')}
               </Typography>
               <Typography 
                 variant="body2" 
@@ -645,7 +661,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   variant="contained"
                   onClick={handleTestWhatsApp}
                   startIcon={<WhatsAppIcon />}
-                  aria-label="Testar no WhatsApp"
+                  aria-label={t('Testar no WhatsApp')}
                   fullWidth
                   sx={{ 
                     minWidth: { sm: 200 },
@@ -658,13 +674,13 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   }}
                   disabled={!generatedLink}
                 >
-                  Testar no WhatsApp
+                  {t('Testar no WhatsApp')}
                 </Button>
                 <Button
                   variant="outlined"
                   onClick={handleCopyLink}
                   startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
-                  aria-label="Copiar link"
+                  aria-label={t('Copiar Link')}
                   fullWidth
                   sx={{ 
                     minWidth: { sm: 160 },
@@ -678,14 +694,14 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   }}
                   disabled={!generatedLink}
                 >
-                  {copySuccess ? 'Copiado!' : 'Copiar link'}
+                  {copySuccess ? t('Link copiado!') : t('Copiar Link')}
                 </Button>
               </Stack>
             </Paper>
             {/* Banner de recursos avançados */}
             {generatedLink && (
               <Paper elevation={0} sx={{ mt: 2, p: 2, bgcolor: 'primary.50', color: 'primary.main', borderRadius: 2, border: '1px solid #b2dfdb' }}>
-                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Aproveite recursos avançados</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>{t('Aproveite recursos avançados')}</Typography>
                 <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" justifyContent="center" mb={1}>
                   <Button
                     variant="outlined"
@@ -694,7 +710,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                     onClick={scrollToTemplates}
                     sx={{ minWidth: 150, fontWeight: 'bold' }}
                   >
-                    Mensagens Prontas
+                    {t('Mensagens Prontas')}
                   </Button>
                   <Button
                     variant="outlined"
@@ -703,7 +719,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                     onClick={handleGenerateQRCodeAndScroll}
                     sx={{ minWidth: 150, fontWeight: 'bold' }}
                   >
-                    Criar QR Code
+                    {t('Criar QR Code')}
                   </Button>
                   <Button
                     variant="outlined"
@@ -712,21 +728,21 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                     onClick={handleFormatMessageBtn}
                     sx={{ minWidth: 150, fontWeight: 'bold', bgcolor: 'background.paper' }}
                   >
-                    Formatar Mensagem
+                    {t('Formatar Mensagem')}
                   </Button>
                 </Stack>
                 <Stack direction="column" spacing={1} mt={1}>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <FormatListBulletedIcon fontSize="small" />
-                    <Typography variant="body2" sx={{ color: '#222' }}>Use uma mensagem pronta para agilizar o atendimento.</Typography>
+                    <Typography variant="body2" sx={{ color: '#222' }}>{t('Use uma mensagem pronta para agilizar o atendimento.')}</Typography>
                   </Stack>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <QrCodeIcon fontSize="small" />
-                    <Typography variant="body2" sx={{ color: '#222' }}>Gere um QR Code para divulgar seu WhatsApp.</Typography>
+                    <Typography variant="body2" sx={{ color: '#222' }}>{t('Gere um QR Code para divulgar seu WhatsApp.')}</Typography>
                   </Stack>
                   <Stack direction="row" spacing={1} alignItems="center">
                     <FormatBoldIcon fontSize="small" />
-                    <Typography variant="body2" sx={{ color: '#222' }}>Formate sua mensagem com negrito, itálico ou emojis.</Typography>
+                    <Typography variant="body2" sx={{ color: '#222' }}>{t('Formate sua mensagem com negrito, itálico ou emojis.')}</Typography>
                   </Stack>
                 </Stack>
               </Paper>

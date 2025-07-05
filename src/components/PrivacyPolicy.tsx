@@ -1,13 +1,16 @@
 import React from 'react';
 import { Box, Container, Typography, Paper } from '@mui/material';
 import SEOHead from './SEOHead';
+import { useTranslation } from 'react-i18next';
 
 const PrivacyPolicy: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <>
       <SEOHead
-        title="Política de Privacidade - Gerador de Link WhatsApp"
-        description="Política de privacidade do Gerador de Link WhatsApp. Saiba como suas informações são protegidas ao usar nossa ferramenta gratuita."
+        title={t('Política de Privacidade - Gerador de Link WhatsApp')}
+        description={t('Política de privacidade do Gerador de Link WhatsApp. Saiba como suas informações são protegidas ao usar nossa ferramenta gratuita.')}
         canonical="https://www.gerarlinkzap.com.br/politica-de-privacidade"
       />
       <Container maxWidth="md">
@@ -58,10 +61,10 @@ const PrivacyPolicy: React.FC = () => {
 
             <Box sx={{ mt: 4, pt: 4, borderTop: '1px solid rgba(0, 0, 0, 0.12)' }}>
               <Typography variant="body2" color="text.secondary" align="center">
-                <strong>Aviso:</strong> Este site não é afiliado, endossado ou patrocinado pelo WhatsApp Inc. "WhatsApp" é uma marca registrada da Meta Platforms, Inc.
+                <strong>{t('Aviso: Este site não é afiliado, endossado ou patrocinado pelo WhatsApp Inc. "WhatsApp" é uma marca registrada da Meta Platforms, Inc.')}</strong>
               </Typography>
               <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
-                Esta ferramenta é gratuita e não requer cadastro. Nenhuma informação é armazenada nos servidores deste site.
+                {t('Esta ferramenta é gratuita e não requer cadastro. Nenhuma informação é armazenada nos servidores deste site.')}
               </Typography>
             </Box>
           </Paper>

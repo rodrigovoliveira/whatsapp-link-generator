@@ -20,6 +20,7 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import BookIcon from '@mui/icons-material/Book';
 import MenuIcon from '@mui/icons-material/Menu';
 import ThemeToggle from './ThemeToggle';
+import { useTranslation } from 'react-i18next';
 
 interface MenuItemProps {
   to: string;
@@ -66,15 +67,16 @@ const MainMenu: React.FC = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useTranslation();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const menuItems = [
-    { to: '/gerar-link-whatsapp', icon: <WhatsAppIcon />, text: 'GERAR LINK' },
-    { to: '/gerar-qr-code', icon: <QrCodeIcon />, text: 'GERAR QR CODE' },
-    { to: '/blog', icon: <BookIcon />, text: 'BLOG' }
+    { to: '/gerar-link-whatsapp', icon: <WhatsAppIcon />, text: t('GERAR LINK') },
+    { to: '/gerar-qr-code', icon: <QrCodeIcon />, text: t('GERAR QR CODE') },
+    { to: '/blog', icon: <BookIcon />, text: t('BLOG') }
   ];
 
   const renderMenuItems = (onClick?: () => void) => (
