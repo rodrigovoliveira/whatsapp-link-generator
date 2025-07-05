@@ -11,9 +11,13 @@ Gerador de links do WhatsApp com mensagem pronta e QR Code. Crie links personali
 - Placeholder e foco automático no campo telefone
 - Mensagem de erro aprimorada para campo vazio
 - Área de link gerado visível após clique, mesmo com telefone inválido
+- Banner de recursos avançados visualmente mais leve, sem duplicidade de botões
+- Textos explicativos em preto para melhor contraste
+- Botão 'Criar QR Code' navega para o topo da página de QR
+- Botão 'Formatar Mensagem' rola até a caixa de texto e foca nela
+- Remoção do popover/modal de formatação do banner
 
 ## Próximos passos:
-- Destacar recursos avançados após geração do link
 - Melhorias de compartilhamento e viralização
 - Exportação de QR Code em SVG
 - Personalização avançada de cores do QR

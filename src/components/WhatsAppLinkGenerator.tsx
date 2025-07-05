@@ -12,6 +12,8 @@ import StrikethroughSIcon from '@mui/icons-material/StrikethroughS';
 import CodeIcon from '@mui/icons-material/Code';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import data from '@emoji-mart/data';
 import { useNavigate } from 'react-router-dom';
 import { detectUserCountry } from '../services/locationService';
@@ -99,6 +101,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
   const [forceShowLinkArea, setForceShowLinkArea] = useState(false);
   const [showAddPhoneMsg, setShowAddPhoneMsg] = useState(false);
   const linkAreaRef = useRef<HTMLDivElement>(null);
+  const [showFormatInfo, setShowFormatInfo] = useState(false);
 
   const generatedLink = useMemo(() => {
     // Validar telefone
@@ -294,6 +297,23 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
         linkAreaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }, 200);
+  };
+
+  const handleFormatMessageBtn = () => {
+    if (messageInputRef.current) {
+      messageInputRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      messageInputRef.current.focus();
+      // Exibir tooltip nativo do navegador
+      messageInputRef.current.setSelectionRange(0, 0);
+      // Opcional: pode exibir uma mensagem temporária ou highlight visual
+    }
+  };
+
+  const handleGenerateQRCodeAndScroll = () => {
+    handleGenerateQRCode();
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 300);
   };
 
   return (
@@ -612,7 +632,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               >
                 {generatedLink || 'O link aparecerá aqui assim que os dados estiverem corretos.'}
               </Typography>
-              {/* Botões de ação responsivos */}
+              {/* Botões de ação principais */}
               <Stack 
                 spacing={2} 
                 sx={{ 
@@ -660,28 +680,57 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                 >
                   {copySuccess ? 'Copiado!' : 'Copiar link'}
                 </Button>
-                <Button
-                  variant="outlined"
-                  onClick={handleGenerateQRCode}
-                  startIcon={<QrCodeIcon />}
-                  aria-label="Gerar QR Code"
-                  fullWidth
-                  sx={{ 
-                    minWidth: { sm: 160 },
-                    py: { xs: 1.5, sm: 1 },
-                    borderColor: '#FFFFFF',
-                    color: '#FFFFFF',
-                    '&:hover': {
-                      borderColor: '#FFFFFF',
-                      bgcolor: 'rgba(255, 255, 255, 0.1)'
-                    }
-                  }}
-                  disabled={!generatedLink}
-                >
-                  QR Code
-                </Button>
               </Stack>
             </Paper>
+            {/* Banner de recursos avançados */}
+            {generatedLink && (
+              <Paper elevation={0} sx={{ mt: 2, p: 2, bgcolor: 'primary.50', color: 'primary.main', borderRadius: 2, border: '1px solid #b2dfdb' }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1, color: 'primary.main' }}>Aproveite recursos avançados</Typography>
+                <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} alignItems="center" justifyContent="center" mb={1}>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    startIcon={<FormatListBulletedIcon />}
+                    onClick={scrollToTemplates}
+                    sx={{ minWidth: 150, fontWeight: 'bold' }}
+                  >
+                    Mensagens Prontas
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    startIcon={<QrCodeIcon />}
+                    onClick={handleGenerateQRCodeAndScroll}
+                    sx={{ minWidth: 150, fontWeight: 'bold' }}
+                  >
+                    Criar QR Code
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<FormatBoldIcon />}
+                    onClick={handleFormatMessageBtn}
+                    sx={{ minWidth: 150, fontWeight: 'bold', bgcolor: 'background.paper' }}
+                  >
+                    Formatar Mensagem
+                  </Button>
+                </Stack>
+                <Stack direction="column" spacing={1} mt={1}>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <FormatListBulletedIcon fontSize="small" />
+                    <Typography variant="body2" sx={{ color: '#222' }}>Use uma mensagem pronta para agilizar o atendimento.</Typography>
+                  </Stack>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <QrCodeIcon fontSize="small" />
+                    <Typography variant="body2" sx={{ color: '#222' }}>Gere um QR Code para divulgar seu WhatsApp.</Typography>
+                  </Stack>
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    <FormatBoldIcon fontSize="small" />
+                    <Typography variant="body2" sx={{ color: '#222' }}>Formate sua mensagem com negrito, itálico ou emojis.</Typography>
+                  </Stack>
+                </Stack>
+              </Paper>
+            )}
           </div>
         )}
 
