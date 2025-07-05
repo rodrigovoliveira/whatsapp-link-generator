@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Container, Typography, Link as MuiLink } from '@mui/material';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Box
       component="footer"
@@ -40,7 +43,7 @@ const Footer: React.FC = () => {
             color="inherit"
             underline="hover"
           >
-            Termos de Uso
+            {t('Termos de Uso')}
           </MuiLink>
           <MuiLink
             component={Link}
@@ -48,12 +51,12 @@ const Footer: React.FC = () => {
             color="inherit"
             underline="hover"
           >
-            Política de Privacidade
+            {t('Política de Privacidade')}
           </MuiLink>
         </Box>
         
         <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 2 }}>
-          © {new Date().getFullYear()} Gerador de Link WhatsApp. Todos os direitos reservados.
+          © {new Date().getFullYear()} Gerador de Link WhatsApp. {t('Todos os direitos reservados')}.
         </Typography>
       </Container>
     </Box>

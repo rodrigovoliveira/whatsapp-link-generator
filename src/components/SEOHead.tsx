@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface SchemaOrg {
   "@context": string;
@@ -116,44 +117,6 @@ const faqSchema: FAQSchema = {
   ]
 };
 
-const webAppSchema: WebAppSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Gerador de Link WhatsApp",
-  "applicationCategory": "UtilityApplication",
-  "operatingSystem": "Any",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "BRL"
-  },
-  "featureList": [
-    "Geração de links personalizados para WhatsApp",
-    "Criação de QR Code personalizado",
-    "Templates de mensagens prontas",
-    "Formatação de texto com emojis",
-    "Interface responsiva"
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "ratingCount": "1250",
-    "bestRating": "5",
-    "worstRating": "1"
-  }
-};
-
-const organizationSchema: OrganizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "GerarLinkZap",
-  "url": "https://www.gerarlinkzap.com.br",
-  "logo": "https://www.gerarlinkzap.com.br/logo.webp",
-  "sameAs": [
-    "https://www.gerarlinkzap.com.br"
-  ]
-};
-
 interface SEOHeadProps {
   page?: 'link' | 'qr' | 'blog';
   title?: string;
@@ -164,22 +127,23 @@ interface SEOHeadProps {
 
 const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description: customDescription, schema, canonical }) => {
   const location = useLocation();
+  const { t } = useTranslation();
   const baseUrl = 'https://www.gerarlinkzap.com.br';
   const currentUrl = `${baseUrl}${location.pathname}`;
 
   // Default values
-  const defaultTitle = 'Gerador de Link WhatsApp - Crie Links e QR Codes para WhatsApp';
-  const defaultDescription = 'Crie links personalizados e QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar links com mensagens prontas para WhatsApp.';
+  const defaultTitle = t('Gerador de Link WhatsApp - Crie Links e QR Codes para WhatsApp');
+  const defaultDescription = t('Crie links personalizados e QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar links com mensagens prontas para WhatsApp.');
 
   // Page specific values
-  const pageTitle = page === 'link' ? 'Gerar Link WhatsApp - Crie Links com Mensagem Pronta' :
-                   page === 'qr' ? 'Gerar QR Code WhatsApp - Crie QR Codes para WhatsApp' :
-                   page === 'blog' ? 'Blog - Gerador de Link WhatsApp' :
+  const pageTitle = page === 'link' ? t('Gerar Link WhatsApp - Crie Links com Mensagem Pronta') :
+                   page === 'qr' ? t('Gerar QR Code WhatsApp - Crie QR Codes para WhatsApp') :
+                   page === 'blog' ? t('Blog - Gerador de Link WhatsApp') :
                    defaultTitle;
 
-  const pageDescription = page === 'link' ? 'Crie links personalizados para WhatsApp com mensagens prontas. Ferramenta gratuita para gerar links do WhatsApp.' :
-                         page === 'qr' ? 'Crie QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar QR Codes com mensagens prontas.' :
-                         page === 'blog' ? 'Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes.' :
+  const pageDescription = page === 'link' ? t('Crie links personalizados para WhatsApp com mensagens prontas. Ferramenta gratuita para gerar links do WhatsApp.') :
+                         page === 'qr' ? t('Crie QR Codes para WhatsApp gratuitamente. Ferramenta online para gerar QR Codes com mensagens prontas.') :
+                         page === 'blog' ? t('Artigos e dicas sobre WhatsApp, marketing digital e comunicação com clientes.') :
                          defaultDescription;
 
   // Use custom values if provided, otherwise use page specific or default values
@@ -196,17 +160,17 @@ const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Início",
+          "name": t('Início'),
           "item": baseUrl
         }
       ]
     };
 
     paths.forEach((path, index) => {
-      const name = path === 'gerar-link-whatsapp' ? 'Gerar Link'
-        : path === 'gerar-qr-code' ? 'Gerar QR Code'
-        : path === 'politica-de-privacidade' ? 'Política de Privacidade'
-        : path === 'termos-de-uso' ? 'Termos de Uso'
+      const name = path === 'gerar-link-whatsapp' ? t('Gerar Link')
+        : path === 'gerar-qr-code' ? t('Gerar QR Code')
+        : path === 'politica-de-privacidade' ? t('Política de Privacidade')
+        : path === 'termos-de-uso' ? t('Termos de Uso')
         : path;
 
       breadcrumbList.itemListElement.push({
@@ -218,6 +182,45 @@ const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description
     });
 
     return breadcrumbList;
+  };
+
+  // Atualizar schemas com traduções
+  const webAppSchema: WebAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": t('Gerador de Link WhatsApp'),
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    },
+    "featureList": [
+      t('Geração de links personalizados para WhatsApp'),
+      t('Criação de QR Code personalizado'),
+      t('Templates de mensagens prontas'),
+      t('Formatação de texto com emojis'),
+      t('Interface responsiva')
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  };
+
+  const organizationSchema: OrganizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": t('GerarLinkZap'),
+    "url": "https://www.gerarlinkzap.com.br",
+    "logo": "https://www.gerarlinkzap.com.br/logo.webp",
+    "sameAs": [
+      "https://www.gerarlinkzap.com.br"
+    ]
   };
 
   // Combina todos os schemas necessários

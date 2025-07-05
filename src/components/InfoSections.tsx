@@ -6,8 +6,10 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import ShareIcon from '@mui/icons-material/Share';
 import CodeIcon from '@mui/icons-material/Code';
 import AdUnit from './AdUnit';
+import { useTranslation } from 'react-i18next';
 
 const InfoSections: React.FC = () => {
+  const { t } = useTranslation();
   const benefits = [
     {
       title: "Link do WhatsApp Profissional",
@@ -325,7 +327,7 @@ const InfoSections: React.FC = () => {
         }}
       >
         <Typography variant="h5" component="h2" gutterBottom>
-          Perguntas Frequentes (FAQ)
+          {t('Perguntas Frequentes (FAQ)')}
         </Typography>
 
         <Stack 
@@ -356,66 +358,66 @@ const InfoSections: React.FC = () => {
         >
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              1. Preciso instalar algo para usar o gerador?
+              {t('Preciso instalar algo para usar o gerador?')}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Não. O gerador funciona direto no navegador. Basta preencher os campos e gerar o link ou QR Code gratuitamente.
+              {t('Não. O gerador funciona direto no navegador. Basta preencher os campos e gerar o link ou QR Code gratuitamente.')}
             </Typography>
           </Box>
 
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              2. O link gerado funciona com WhatsApp Business?
+              {t('O link gerado funciona com WhatsApp Business?')}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Sim, o link funciona tanto com contas normais quanto com contas Business do WhatsApp.
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography variant="h6" component="h3" gutterBottom>
-              3. O QR Code gerado tem validade?
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              Não. O QR Code funciona enquanto o link estiver ativo e o número de WhatsApp existir.
+              {t('Sim, o link funciona tanto com contas normais quanto com contas Business do WhatsApp.')}
             </Typography>
           </Box>
 
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              4. O link pode ser usado em redes sociais e sites?
+              {t('O QR Code gerado tem validade?')}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Sim. Ele pode ser incluído em páginas de vendas, Instagram, Linktree, blogs, etc.
+              {t('Não. O QR Code funciona enquanto o link estiver ativo e o número de WhatsApp existir.')}
             </Typography>
           </Box>
 
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              5. O que acontece se o número estiver incorreto?
-          </Typography>
+              {t('O link pode ser usado em redes sociais e sites?')}
+            </Typography>
             <Typography variant="body1" color="text.secondary">
-              O link não funcionará. Verifique sempre o número antes de compartilhar.
-          </Typography>
+              {t('Sim. Ele pode ser incluído em páginas de vendas, Instagram, Linktree, blogs, etc.')}
+            </Typography>
           </Box>
 
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              6. O site guarda meus dados?
-          </Typography>
+              {t('O que acontece se o número estiver incorreto?')}
+            </Typography>
             <Typography variant="body1" color="text.secondary">
-              Não. Nenhuma informação preenchida é armazenada. O processo é 100% local e seguro.
-          </Typography>
+              {t('O link não funcionará. Verifique sempre o número antes de compartilhar.')}
+            </Typography>
           </Box>
 
           <Box>
             <Typography variant="h6" component="h3" gutterBottom>
-              7. Posso personalizar a mensagem do link?
-          </Typography>
+              {t('O site guarda meus dados?')}
+            </Typography>
             <Typography variant="body1" color="text.secondary">
-              Sim! É possível escrever uma mensagem automática que será carregada ao abrir o WhatsApp.
-          </Typography>
-        </Box>
+              {t('Não. Nenhuma informação preenchida é armazenada. O processo é 100% local e seguro.')}
+            </Typography>
+          </Box>
+
+          <Box>
+            <Typography variant="h6" component="h3" gutterBottom>
+              {t('Posso personalizar a mensagem do link?')}
+            </Typography>
+            <Typography variant="body1" color="text.secondary">
+              {t('Sim! É possível escrever uma mensagem automática que será carregada ao abrir o WhatsApp.')}
+            </Typography>
+          </Box>
         </Stack>
       </Paper>
 

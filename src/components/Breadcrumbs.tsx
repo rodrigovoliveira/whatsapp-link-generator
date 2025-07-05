@@ -10,26 +10,28 @@ import SecurityIcon from '@mui/icons-material/Security';
 import GavelIcon from '@mui/icons-material/Gavel';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import BookIcon from '@mui/icons-material/Book';
+import { useTranslation } from 'react-i18next';
 
 const Breadcrumbs: React.FC = () => {
   const location = useLocation();
   const { mode } = useTheme();
   const isDarkMode = mode === 'dark';
+  const { t } = useTranslation();
 
   const getPathInfo = (path: string): { name: string; icon: React.ReactNode } => {
     switch (path) {
       case 'gerar-link-whatsapp':
-        return { name: 'Gerar Link', icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Gerar Link'), icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} /> };
       case 'gerar-qr-code':
-        return { name: 'Gerar QR Code', icon: <QrCodeIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Gerar QR Code'), icon: <QrCodeIcon sx={{ fontSize: '1rem' }} /> };
       case 'politica-de-privacidade':
-        return { name: 'Política de Privacidade', icon: <SecurityIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Política de Privacidade'), icon: <SecurityIcon sx={{ fontSize: '1rem' }} /> };
       case 'termos-de-uso':
-        return { name: 'Termos de Uso', icon: <GavelIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Termos de Uso'), icon: <GavelIcon sx={{ fontSize: '1rem' }} /> };
       case 'blog':
-        return { name: 'Blog', icon: <BookIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Blog'), icon: <BookIcon sx={{ fontSize: '1rem' }} /> };
       case 'whatsapp-web-para-pequenas-empresas':
-        return { name: 'WhatsApp Web para Empresas', icon: <ArticleIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('WhatsApp Web para Empresas'), icon: <ArticleIcon sx={{ fontSize: '1rem' }} /> };
       default:
         return { name: path, icon: <ArticleIcon sx={{ fontSize: '1rem' }} /> };
     }
@@ -90,7 +92,7 @@ const Breadcrumbs: React.FC = () => {
                 fontWeight: 500,
               }}
             >
-              Início
+              {t('Início')}
             </Typography>
           </Link>
         </Box>
