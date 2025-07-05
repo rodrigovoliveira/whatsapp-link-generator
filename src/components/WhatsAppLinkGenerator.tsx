@@ -93,6 +93,12 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
   const navigate = useNavigate();
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const messageTemplatesRef = useRef<HTMLDivElement>(null);
+  const [showTutorial, setShowTutorial] = useState(() => {
+    return !localStorage.getItem('wa_tutorial_done');
+  });
+  const [forceShowLinkArea, setForceShowLinkArea] = useState(false);
+  const [showAddPhoneMsg, setShowAddPhoneMsg] = useState(false);
+  const linkAreaRef = useRef<HTMLDivElement>(null);
 
   const generatedLink = useMemo(() => {
     // Validar telefone
@@ -140,6 +146,13 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
 
     loadUserCountry();
   }, []);
+
+  useEffect(() => {
+    if (generatedLink && showTutorial) {
+      setShowTutorial(false);
+      localStorage.setItem('wa_tutorial_done', '1');
+    }
+  }, [generatedLink, showTutorial]);
 
   // Rastrear visualização da página
   useEffect(() => {
@@ -262,8 +275,50 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
     }
   };
 
+  const handleGenerateLinkBtn = () => {
+    if (!phone || phone.trim() === '' || phone === '+55') {
+      setShowAddPhoneMsg(true);
+      setForceShowLinkArea(false);
+      // Foco automático no campo telefone
+      setTimeout(() => {
+        const input = document.querySelector('.PhoneInputInput') as HTMLInputElement | null;
+        if (input) input.focus();
+      }, 100);
+      return;
+    }
+    setShowAddPhoneMsg(false);
+    setForceShowLinkArea(true);
+    // Scroll suave para a área do link gerado
+    setTimeout(() => {
+      if (linkAreaRef.current) {
+        linkAreaRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }, 200);
+  };
+
   return (
-    <Box sx={{ width: '100%', p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ width: '100%', p: { xs: 2, sm: 3 }, position: 'relative' }}>
+      {/* Tutorial passo a passo */}
+      {showTutorial && (
+        <Paper elevation={3} sx={{ mb: 3, p: 2, bgcolor: 'primary.light', color: 'primary.contrastText', textAlign: 'center' }}>
+          <Typography variant="h6" sx={{ mb: 1 }}>Como gerar seu link do WhatsApp:</Typography>
+          <Stack direction="row" spacing={2} justifyContent="center" alignItems="center" sx={{ flexWrap: 'wrap' }}>
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>1</Typography>
+              <Typography variant="body2">Digite seu número</Typography>
+            </Box>
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>2</Typography>
+              <Typography variant="body2">(Opcional) Escreva uma mensagem</Typography>
+            </Box>
+            <Box>
+              <Typography variant="body2" sx={{ fontWeight: 'bold' }}>3</Typography>
+              <Typography variant="body2">Toque em <b>Gerar Link</b></Typography>
+            </Box>
+          </Stack>
+        </Paper>
+      )}
+
       <Typography 
         variant="h1" 
         sx={{ 
@@ -284,10 +339,10 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
           color: 'text.secondary'
         }}
       >
-        Gere links personalizados para WhatsApp com mensagem pré-definida. Sem login e sem custo – basta inserir o número e a mensagem.
+        Cole seu número e gere seu link do WhatsApp em segundos!
       </Typography>
 
-      <Box sx={{ maxWidth: '600px', mx: 'auto' }}>
+      <Box sx={{ maxWidth: '600px', mx: 'auto', position: 'relative' }}>
         <Paper 
           elevation={2} 
           sx={{ 
@@ -311,21 +366,32 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               disabled={isLoadingCountry}
               error={phoneError}
               aria-label="Número do WhatsApp"
+              placeholder="Ex: 11999999999"
               sx={{
                 '& .PhoneInputInput': {
                   width: '100%',
                   p: 1.5,
                   borderRadius: 1,
-                  border: '1px solid',
-                  borderColor: 'divider',
+                  border: '2px solid',
+                  borderColor: phone && !phoneError ? 'success.main' : 'divider',
                   bgcolor: 'background.paper',
                   color: 'text.primary',
+                  transition: 'border-color 0.2s',
+                  '::placeholder': {
+                    color: '#bdbdbd',
+                    opacity: 1,
+                  }
                 }
               }}
             />
-            {phoneError && (
+            {showAddPhoneMsg && (
               <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
-                {phoneError}
+                Digite o número do WhatsApp com DDD. Ex: 11999999999
+              </Typography>
+            )}
+            {!showAddPhoneMsg && phoneError && (
+              <Typography color="error" variant="caption" sx={{ mt: 1, display: 'block' }}>
+                {phoneError === 'Número inválido' ? 'Digite um número válido com DDD. Ex: 11999999999' : phoneError}
               </Typography>
             )}
           </Box>
@@ -446,13 +512,20 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               fullWidth
               value={message}
               onChange={(e) => handleMessageChange(e.target.value)}
-              placeholder="Digite sua mensagem aqui..."
+              placeholder="Ex: Olá! Gostaria de mais informações."
               error={!!messageError}
-              helperText={messageError}
+              helperText={messageError && messageError === 'Mensagem muito curta' ? 'Digite uma mensagem maior ou deixe em branco.' : messageError}
               aria-label="Mensagem"
               sx={{
                 '& .MuiInputBase-input': {
                   color: 'text.primary',
+                },
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: message && !messageError ? 'success.main' : undefined,
+                    borderWidth: message && !messageError ? 2 : undefined,
+                    transition: 'border-color 0.2s',
+                  }
                 }
               }}
               inputRef={messageInputRef}
@@ -466,135 +539,173 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
           </Box>
         </Paper>
 
-        {/* Link gerado - Movido para fora do Paper principal */}
-          {generatedLink && (
+        {/* Botão de gerar link destacado e fixo no mobile */}
+        <Box sx={{
+          position: 'fixed',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 1200,
+          px: 2,
+          py: 2,
+          background: 'rgba(255,255,255,0.95)',
+          boxShadow: 3,
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
+          <Button
+            variant="contained"
+            color="success"
+            size="large"
+            fullWidth
+            sx={{
+              maxWidth: 600,
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              py: 2,
+              borderRadius: 2,
+              boxShadow: 4,
+              textTransform: 'none',
+              letterSpacing: 1,
+            }}
+            onClick={handleGenerateLinkBtn}
+            aria-label="Gerar Link do WhatsApp"
+          >
+            Gerar Link do WhatsApp
+          </Button>
+        </Box>
+
+        {/* Área de link gerado e opções */}
+        {(forceShowLinkArea || generatedLink) && (
+          <div ref={linkAreaRef}>
             <Paper 
               elevation={1} 
               sx={{ 
-              p: 3,
-              mt: 3,
+                p: 3,
+                mt: 3,
                 bgcolor: 'success.light',
-              color: 'success.contrastText',
-              borderRadius: 1,
-              width: '100%'
-            }}
-          >
-            <Typography 
-              variant="subtitle2" 
-              gutterBottom
-              sx={{
                 color: 'success.contrastText',
-                fontWeight: 'bold'
+                borderRadius: 1,
+                width: '100%'
               }}
             >
-                Link gerado com sucesso:
+              <Typography 
+                variant="subtitle2" 
+                gutterBottom
+                sx={{
+                  color: 'success.contrastText',
+                  fontWeight: 'bold'
+                }}
+              >
+                {generatedLink ? 'Link gerado com sucesso:' : 'Preencha corretamente para gerar o link'}
               </Typography>
               <Typography 
                 variant="body2" 
                 sx={{ 
                   wordBreak: 'break-all',
                   fontFamily: 'monospace',
-                mb: 2,
-                fontSize: '1rem',
-                color: 'success.contrastText',
-                opacity: 0.9
+                  mb: 2,
+                  fontSize: '1rem',
+                  color: 'success.contrastText',
+                  opacity: 0.9
                 }}
               >
-                {generatedLink}
+                {generatedLink || 'O link aparecerá aqui assim que os dados estiverem corretos.'}
               </Typography>
-
-          {/* Botões de ação responsivos */}
-          <Stack 
-            spacing={2} 
-            sx={{ 
-                mt: 3,
-              flexDirection: { xs: 'column', sm: 'row' },
-              justifyContent: 'center'
-            }}
-          >
-            <Button
-              variant="contained"
-              onClick={handleTestWhatsApp}
-              startIcon={<WhatsAppIcon />}
-              aria-label="Testar no WhatsApp"
-              fullWidth
-              sx={{ 
-                minWidth: { sm: 200 },
-                  py: { xs: 1.5, sm: 1 },
-                  bgcolor: '#25D366',
-                  color: '#FFFFFF',
-                  '&:hover': {
-                    bgcolor: '#128C7E'
-                  }
-              }}
-            >
-              Testar no WhatsApp
-            </Button>
-
-            <Button
-              variant="outlined"
-              onClick={handleCopyLink}
-              startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
-              aria-label="Copiar link"
-              fullWidth
-              sx={{ 
-                minWidth: { sm: 160 },
-                  py: { xs: 1.5, sm: 1 },
-                  borderColor: '#FFFFFF',
-                  color: '#FFFFFF',
-                  '&:hover': {
+              {/* Botões de ação responsivos */}
+              <Stack 
+                spacing={2} 
+                sx={{ 
+                  mt: 3,
+                  flexDirection: { xs: 'column', sm: 'row' },
+                  justifyContent: 'center'
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={handleTestWhatsApp}
+                  startIcon={<WhatsAppIcon />}
+                  aria-label="Testar no WhatsApp"
+                  fullWidth
+                  sx={{ 
+                    minWidth: { sm: 200 },
+                    py: { xs: 1.5, sm: 1 },
+                    bgcolor: '#25D366',
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      bgcolor: '#128C7E'
+                    }
+                  }}
+                  disabled={!generatedLink}
+                >
+                  Testar no WhatsApp
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={handleCopyLink}
+                  startIcon={copySuccess ? <CheckCircleIcon /> : <ContentCopyIcon />}
+                  aria-label="Copiar link"
+                  fullWidth
+                  sx={{ 
+                    minWidth: { sm: 160 },
+                    py: { xs: 1.5, sm: 1 },
                     borderColor: '#FFFFFF',
-                    bgcolor: 'rgba(255, 255, 255, 0.1)'
-                  }
-              }}
-            >
-              {copySuccess ? 'Copiado!' : 'Copiar link'}
-            </Button>
-
-            <Button
-              variant="outlined"
-              onClick={handleGenerateQRCode}
-              startIcon={<QrCodeIcon />}
-              aria-label="Gerar QR Code"
-              fullWidth
-              sx={{ 
-                minWidth: { sm: 160 },
-                  py: { xs: 1.5, sm: 1 },
-                  borderColor: '#FFFFFF',
-                  color: '#FFFFFF',
-                  '&:hover': {
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      borderColor: '#FFFFFF',
+                      bgcolor: 'rgba(255, 255, 255, 0.1)'
+                    }
+                  }}
+                  disabled={!generatedLink}
+                >
+                  {copySuccess ? 'Copiado!' : 'Copiar link'}
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={handleGenerateQRCode}
+                  startIcon={<QrCodeIcon />}
+                  aria-label="Gerar QR Code"
+                  fullWidth
+                  sx={{ 
+                    minWidth: { sm: 160 },
+                    py: { xs: 1.5, sm: 1 },
                     borderColor: '#FFFFFF',
-                    bgcolor: 'rgba(255, 255, 255, 0.1)'
-                  }
-              }}
-            >
-              QR Code
-            </Button>
-          </Stack>
-          </Paper>
+                    color: '#FFFFFF',
+                    '&:hover': {
+                      borderColor: '#FFFFFF',
+                      bgcolor: 'rgba(255, 255, 255, 0.1)'
+                    }
+                  }}
+                  disabled={!generatedLink}
+                >
+                  QR Code
+                </Button>
+              </Stack>
+            </Paper>
+          </div>
         )}
 
         {/* Botão de limpar campos */}
-          <Button
-            variant="text"
-            onClick={onReset}
-            startIcon={<RestartAltIcon />}
-            aria-label="Limpar campos"
-            sx={{ 
-              alignSelf: 'center',
+        <Button
+          variant="text"
+          onClick={onReset}
+          startIcon={<RestartAltIcon />}
+          aria-label="Limpar campos"
+          sx={{ 
+            alignSelf: 'center',
             py: { xs: 1.5, sm: 1 },
             mt: 2
-            }}
-          >
-            Limpar campos
-          </Button>
+          }}
+        >
+          Limpar campos
+        </Button>
       </Box>
 
       <Box sx={{ mt: 6 }}>
         <QuickInstructions />
       </Box>
 
-        <InfoSections />
+      <InfoSections />
       
       <Popover
         open={Boolean(emojiAnchorEl)}
