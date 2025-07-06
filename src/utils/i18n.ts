@@ -10,7 +10,7 @@ const resources = {
       'Como gerar seu link do WhatsApp:': 'Como gerar seu link do WhatsApp:',
       'Digite seu número': 'Digite seu número',
       '(Opcional) Escreva uma mensagem': '(Opcional) Escreva uma mensagem',
-      'Toque em <b>Gerar Link</b>': 'Toque em <b>Gerar Link</b>',
+      'Toque em <b>Gerar Link</b>': 'Toque em <b>Gerar Link WhatsApp</b>',
       'Mensagem (opcional)': 'Mensagem (opcional)',
       'Ver mensagens prontas ↓': 'Ver mensagens prontas ↓',
       'Exemplos de mensagens prontas': 'Exemplos de mensagens prontas',
@@ -76,6 +76,7 @@ const resources = {
       'Esta ferramenta é gratuita e não requer cadastro. Nenhuma informação é armazenada nos servidores deste site.': 'Esta ferramenta é gratuita e não requer cadastro. Nenhuma informação é armazenada nos servidores deste site.',
       'Início': 'Início',
       'Gerar Link': 'Gerar Link',
+      'Gerar Link WhatsApp': 'Gerar Link WhatsApp',
       'Gerar QR Code': 'Gerar QR Code',
       'Blog': 'Blog',
       'Gerador de Link WhatsApp - Crie Links e QR Codes para WhatsApp': 'Gerador de Link WhatsApp - Crie Links e QR Codes para WhatsApp',
@@ -98,6 +99,10 @@ const resources = {
       'Interface responsiva': 'Interface responsiva',
       'GerarLinkZap': 'GerarLinkZap',
       'WhatsApp Web para Empresas': 'WhatsApp Web para Empresas',
+      'Crie seu Link para WhatsApp Grátis': 'Crie seu Link para WhatsApp Grátis',
+      'Mensagem muito longa': 'Mensagem muito longa',
+      'Formato de arquivo inválido': 'Formato de arquivo inválido',
+      'Arquivo muito grande': 'Arquivo muito grande',
     }
   },
   en: {
@@ -107,7 +112,7 @@ const resources = {
       'Como gerar seu link do WhatsApp:': 'How to generate your WhatsApp link:',
       'Digite seu número': 'Enter your number',
       '(Opcional) Escreva uma mensagem': '(Optional) Write a message',
-      'Toque em <b>Gerar Link</b>': 'Tap <b>Generate Link</b>',
+      'Toque em <b>Gerar Link</b>': 'Tap <b>Generate WhatsApp Link</b>',
       'Mensagem (opcional)': 'Message (optional)',
       'Ver mensagens prontas ↓': 'See ready-made messages ↓',
       'Exemplos de mensagens prontas': 'Ready-made message examples',
@@ -126,6 +131,7 @@ const resources = {
       'Baixar PNG': 'Download PNG',
       'Copiar Link': 'Copy Link',
       'Gerar Link': 'Generate Link',
+      'Gerar Link WhatsApp': 'Generate WhatsApp Link',
       'Gerar QR Code': 'Generate QR Code',
       'Número de telefone': 'Phone number',
       'Mensagem': 'Message',
@@ -195,6 +201,10 @@ const resources = {
       'Interface responsiva': 'Responsive interface',
       'GerarLinkZap': 'GerarLinkZap',
       'WhatsApp Web para Empresas': 'WhatsApp Web for Businesses',
+      'Crie seu Link para WhatsApp Grátis': 'Create your Free WhatsApp Link',
+      'Mensagem muito longa': 'Message too long',
+      'Formato de arquivo inválido': 'Invalid file format',
+      'Arquivo muito grande': 'File too large',
     }
   }
 };

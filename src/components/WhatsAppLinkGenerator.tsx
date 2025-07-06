@@ -127,7 +127,27 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
     const cleanPhone = phone.replace(/\D/g, '');
     const encodedMessage = sanitizedMessage ? `?text=${encodeURIComponent(sanitizedMessage)}` : '';
     
+    // Link principal usando wa.me (melhor compatibilidade)
+    // Vantagens do wa.me:
+    // ✅ Sempre abre o app quando disponível
+    // ✅ Fallback inteligente para web.whatsapp.com se app não instalado
+    // ✅ Funciona em todos os dispositivos (mobile e desktop)
+    // ✅ Formato oficial e suportado pelo WhatsApp
     return `https://wa.me/${cleanPhone}${encodedMessage}`;
+  }, [phone, message]);
+
+  // Função para gerar link híbrido (protocolo nativo + fallback)
+  const generateHybridLink = useMemo(() => {
+    if (!phone || !validatePhone(phone).isValid) {
+      return '';
+    }
+    
+    const cleanPhone = phone.replace(/\D/g, '');
+    const sanitizedMessage = message ? sanitizeInput(message) : '';
+    const encodedMessage = sanitizedMessage ? `&text=${encodeURIComponent(sanitizedMessage)}` : '';
+    
+    // Link híbrido: tenta protocolo nativo, fallback para wa.me
+    return `whatsapp://send?phone=${cleanPhone}${encodedMessage}`;
   }, [phone, message]);
 
   useEffect(() => {
@@ -232,6 +252,43 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
       window.open(generatedLink, '_blank');
       analytics.trackLinkClick(); // Rastrear clique no link
     }
+  };
+
+  // Função para testar com fallback inteligente
+  const handleTestWhatsAppWithFallback = () => {
+    if (!phone || !validatePhone(phone).isValid) return;
+    
+    const cleanPhone = phone.replace(/\D/g, '');
+    const sanitizedMessage = message ? sanitizeInput(message) : '';
+    const encodedMessage = sanitizedMessage ? `&text=${encodeURIComponent(sanitizedMessage)}` : '';
+    
+    // Tenta primeiro o protocolo nativo
+    const nativeLink = `whatsapp://send?phone=${cleanPhone}${encodedMessage}`;
+    
+    // Fallback para wa.me se o protocolo nativo falhar
+    const fallbackLink = `https://wa.me/${cleanPhone}${sanitizedMessage ? `?text=${encodeURIComponent(sanitizedMessage)}` : ''}`;
+    
+    // Tenta abrir o protocolo nativo
+    const link = document.createElement('a');
+    link.href = nativeLink;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    
+    // Timeout para detectar se o protocolo nativo falhou
+    const timeout = setTimeout(() => {
+      document.body.removeChild(link);
+      // Se falhou, abre o fallback
+      window.open(fallbackLink, '_blank');
+    }, 1000);
+    
+    // Se o protocolo nativo funcionou, remove o timeout
+    link.addEventListener('click', () => {
+      clearTimeout(timeout);
+      document.body.removeChild(link);
+    });
+    
+    link.click();
+    analytics.trackLinkClick(); // Rastrear clique no link
   };
 
   const handleGenerateQRCode = () => {
@@ -364,7 +421,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
           color: 'primary.main'
         }}
       >
-        {t('Crie seu Link WhatsApp')}
+        {t('Crie seu Link para WhatsApp Grátis')}
       </Typography>
 
       <Typography 
@@ -594,6 +651,7 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
             color="success"
             size="large"
             fullWidth
+            startIcon={<WhatsAppIcon />}
             sx={{
               maxWidth: 600,
               fontSize: '1.2rem',
@@ -605,9 +663,9 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
               letterSpacing: 1,
             }}
             onClick={handleGenerateLinkBtn}
-            aria-label={t('Gerar Link')}
+            aria-label={t('Gerar Link WhatsApp')}
           >
-            {t('Gerar Link')}
+            {t('Gerar Link WhatsApp')}
           </Button>
         </Box>
 
@@ -654,23 +712,29 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                 sx={{ 
                   mt: 3,
                   flexDirection: { xs: 'column', sm: 'row' },
-                  justifyContent: 'center'
+                  justifyContent: 'center',
+                  alignItems: 'stretch',
                 }}
               >
                 <Button
                   variant="contained"
-                  onClick={handleTestWhatsApp}
+                  onClick={handleTestWhatsAppWithFallback}
                   startIcon={<WhatsAppIcon />}
                   aria-label={t('Testar no WhatsApp')}
                   fullWidth
                   sx={{ 
                     minWidth: { sm: 200 },
-                    py: { xs: 1.5, sm: 1 },
+                    padding: '12px 16px',
+                    fontSize: '1.1rem',
+                    fontWeight: 'bold',
                     bgcolor: '#25D366',
                     color: '#FFFFFF',
-                    '&:hover': {
-                      bgcolor: '#128C7E'
-                    }
+                    minHeight: 56,
+                    height: 56,
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                   disabled={!generatedLink}
                 >
@@ -683,10 +747,23 @@ const WhatsAppLinkGenerator: React.FC<WhatsAppLinkGeneratorProps> = ({
                   aria-label={t('Copiar Link')}
                   fullWidth
                   sx={{ 
-                    minWidth: { sm: 160 },
-                    py: { xs: 1.5, sm: 1 },
+                    minWidth: { sm: 200 },
+                    padding: '12px 16px',
+                    fontSize: '1.1rem',
+                    fontWeight: 'bold',
+                    minHeight: 56,
+                    height: 56,
+                    boxSizing: 'border-box',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                     borderColor: '#FFFFFF',
+                    borderWidth: 2,
                     color: '#FFFFFF',
+                    boxShadow: 'none',
+                    '&.MuiButton-root': {
+                      marginTop: '0 !important',
+                    },
                     '&:hover': {
                       borderColor: '#FFFFFF',
                       bgcolor: 'rgba(255, 255, 255, 0.1)'

@@ -14,7 +14,7 @@ export interface ValidationResult {
 // Validação de número de telefone
 export const validatePhone = (phone: string): ValidationResult => {
   if (!phone) {
-    return { isValid: false, error: 'O número de telefone é obrigatório' };
+    return { isValid: false, error: 'Campo obrigatório' };
   }
 
   try {
@@ -22,22 +22,22 @@ export const validatePhone = (phone: string): ValidationResult => {
     const cleanPhone = phone.replace(/\D/g, '');
     
     if (cleanPhone.length < MIN_PHONE_LENGTH) {
-      return { isValid: false, error: 'Número de telefone muito curto' };
+      return { isValid: false, error: 'Número inválido' };
     }
 
     // Usa libphonenumber-js para validação completa
     if (!isValidPhoneNumber(phone)) {
-      return { isValid: false, error: 'Número de telefone inválido' };
+      return { isValid: false, error: 'Número inválido' };
     }
 
     const phoneNumber = parsePhoneNumber(phone);
     if (!phoneNumber?.isValid()) {
-      return { isValid: false, error: 'Formato de número inválido' };
+      return { isValid: false, error: 'Telefone em formato incorreto' };
     }
 
     return { isValid: true };
   } catch (error) {
-    return { isValid: false, error: 'Erro ao validar número de telefone' };
+    return { isValid: false, error: 'Telefone em formato incorreto' };
   }
 };
 
@@ -50,7 +50,7 @@ export const validateMessage = (message: string): ValidationResult => {
   if (message.length > MAX_MESSAGE_LENGTH) {
     return { 
       isValid: false, 
-      error: `A mensagem não pode ter mais que ${MAX_MESSAGE_LENGTH} caracteres` 
+      error: 'Mensagem muito longa'
     };
   }
 
@@ -73,14 +73,14 @@ export const validateImageFile = (file: File): ValidationResult => {
   if (!validTypes.includes(file.type)) {
     return { 
       isValid: false, 
-      error: 'Formato de arquivo inválido. Use JPG, PNG, GIF ou WebP' 
+      error: 'Formato de arquivo inválido'
     };
   }
 
   if (file.size > maxSize) {
     return { 
       isValid: false, 
-      error: 'Arquivo muito grande. O tamanho máximo é 5MB' 
+      error: 'Arquivo muito grande'
     };
   }
 

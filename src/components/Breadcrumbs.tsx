@@ -21,7 +21,7 @@ const Breadcrumbs: React.FC = () => {
   const getPathInfo = (path: string): { name: string; icon: React.ReactNode } => {
     switch (path) {
       case 'gerar-link-whatsapp':
-        return { name: t('Gerar Link'), icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} /> };
+        return { name: t('Gerar Link WhatsApp'), icon: <WhatsAppIcon sx={{ fontSize: '1rem' }} /> };
       case 'gerar-qr-code':
         return { name: t('Gerar QR Code'), icon: <QrCodeIcon sx={{ fontSize: '1rem' }} /> };
       case 'politica-de-privacidade':
