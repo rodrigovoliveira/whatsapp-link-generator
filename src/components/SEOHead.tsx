@@ -167,7 +167,7 @@ const SEOHead: React.FC<SEOHeadProps> = ({ page, title: customTitle, description
     };
 
     paths.forEach((path, index) => {
-      const name = path === 'gerar-link-whatsapp' ? t('Gerar Link')
+      const name = path === 'gerar-link-whatsapp' ? t('Gerar Link WhatsApp')
         : path === 'gerar-qr-code' ? t('Gerar QR Code')
         : path === 'politica-de-privacidade' ? t('Política de Privacidade')
         : path === 'termos-de-uso' ? t('Termos de Uso')
